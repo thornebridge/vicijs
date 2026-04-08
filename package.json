@@ -1,5 +1,5 @@
 {
-  "name": "vicijs",
+  "name": "@thornebridge/vicijs",
   "version": "0.1.0",
   "description": "Official TypeScript SDK for ViciDial — type-safe API client with full feature parity",
   "type": "module",
@@ -20,7 +20,9 @@
   },
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsup",
@@ -31,6 +33,9 @@
     "lint:fix": "biome check --write src tests",
     "ci": "npm run typecheck && npm run lint && npm run test && npm run build",
     "prepublishOnly": "npm run ci"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "license": "AGPL-2.0",
   "engines": {
@@ -48,13 +53,17 @@
     "sdk",
     "outbound",
     "inbound",
-    "predictive-dialer"
+    "predictive-dialer",
+    "crm",
+    "ivr",
+    "asterisk",
+    "voip"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Thornebridge/vicijs.git"
   },
-  "homepage": "https://github.com/Thornebridge/vicijs#readme",
+  "homepage": "https://thornebridge.github.io/vicijs/",
   "bugs": {
     "url": "https://github.com/Thornebridge/vicijs/issues"
   },

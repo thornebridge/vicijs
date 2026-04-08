@@ -5,7 +5,7 @@ The definitive TypeScript SDK for [ViciDial](https://vicidial.org). Type-safe, z
 **91 API functions. 658 typed parameters. 108 tests. 0 dependencies.**
 
 ```bash
-npm install vicijs
+npm install @thornebridge/vicijs
 ```
 
 ## Why ViciJS
@@ -28,7 +28,7 @@ ViciJS fixes all of that:
 Control agent sessions — dial, pause, transfer, park, record, hangup.
 
 ```typescript
-import { ViciAgent } from 'vicijs';
+import { ViciAgent } from '@thornebridge/vicijs';
 
 const agent = new ViciAgent({
   baseUrl: 'https://dialer.example.com',
@@ -52,7 +52,7 @@ await agent.logout();
 Manage leads, users, campaigns, lists, DIDs, DNC, monitor agents, pull reports.
 
 ```typescript
-import { ViciAdmin } from 'vicijs';
+import { ViciAdmin } from '@thornebridge/vicijs';
 
 const admin = new ViciAdmin({
   baseUrl: 'https://dialer.example.com',
@@ -118,7 +118,7 @@ import {
   ViciValidationError,  // Bad params, duplicates, disabled features
   ViciHttpError,        // Non-2xx HTTP status
   ViciTimeoutError,     // Request exceeded timeout
-} from 'vicijs';
+} from '@thornebridge/vicijs';
 
 try {
   await admin.leads.add({ phoneNumber: '5551234567', listId: 101 });
@@ -139,7 +139,7 @@ try {
 ViciDial returns pipe-delimited text. Use the built-in schemas to map positional fields to named properties:
 
 ```typescript
-import { mapFields, ADMIN_SCHEMAS, AGENT_SCHEMAS } from 'vicijs';
+import { mapFields, ADMIN_SCHEMAS, AGENT_SCHEMAS } from '@thornebridge/vicijs';
 
 const result = await admin.leads.allInfo({ leadId: 12345 });
 const lead = mapFields(result.rawData, ADMIN_SCHEMAS.lead_all_info);
@@ -160,7 +160,7 @@ version.data.build;    // '250720-1841'
 85+ status codes, 70 agent events, and 30+ parameter enums — all typed.
 
 ```typescript
-import { AgentStatus, SystemStatus, AgentEvent } from 'vicijs';
+import { AgentStatus, SystemStatus, AgentEvent } from '@thornebridge/vicijs';
 
 AgentStatus.SALE      // 'SALE'
 AgentStatus.DNC       // 'DNC'
