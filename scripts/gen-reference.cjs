@@ -101,7 +101,16 @@ function escapeHtml(s) {
 }
 
 function typeToHtml(t) {
-	return `<code>${escapeHtml(t)}</code>`;
+	// Clean up union types for display
+	let clean = t.replace(/^\|\s*/, "").trim();
+	// Format multi-value unions as comma-separated values instead of pipe-separated
+	if (clean.includes('" |')) {
+		const values = clean.match(/"[^"]+"/g);
+		if (values) {
+			return `<code>${values.join(", ")}</code>`;
+		}
+	}
+	return `<code>${escapeHtml(clean)}</code>`;
 }
 
 function generateTable(iface, fnName) {
