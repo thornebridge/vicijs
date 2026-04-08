@@ -102,17 +102,17 @@ export type BlindMonitorStage =
 
 /** Campaign dial method */
 export type DialMethod =
+	| "MANUAL"
+	| "RATIO"
 	| "INBOUND_MAN"
-	| "INBOUND_AUTO"
-	| "OUTBOUND_MAN"
-	| "OUTBOUND_AUTO"
-	| "PREVIEW_DIAL"
-	| "PREVIEW_WEBFORM";
+	| "ADAPT_AVERAGE"
+	| "ADAPT_HARD_LIMIT"
+	| "ADAPT_TAPERED";
 
 /** Phone protocol */
 export type PhoneProtocol = "IAX2" | "SIP" | "Zap" | "EXTERNAL";
 
-/** Sort order for leads/lists */
+/** Basic sort order for leads/lists. Composite values like "RANDOM 2nd NEW" or "DOWN COUNT" are also valid. */
 export type SortOrder = "UP" | "DOWN" | "RANDOM";
 
 /** API output format */
@@ -159,8 +159,8 @@ export type PhoneNumberLogType = "IN" | "OUT" | "ALL";
 /** Phone number log detail level */
 export type PhoneNumberLogDetail = "ALL" | "LAST";
 
-/** Duplicate check methods (can be hyphen-combined) */
-export type DuplicateCheck =
+/** Base duplicate check methods */
+type DuplicateCheckBase =
 	| "DUPLIST"
 	| "DUPCAMP"
 	| "DUPSYS"
@@ -172,20 +172,28 @@ export type DuplicateCheck =
 	| "DUPTITLEALTPHONESYS"
 	| "DUPNAMEPHONELIST"
 	| "DUPNAMEPHONECAMP"
-	| "DUPNAMEPHONESYS"
-	| "DUPPHONEALT1DAY"
-	| "DUPPHONEALT2DAY"
-	| "DUPPHONEALT3DAY"
-	| "DUPPHONEALT7DAY"
-	| "DUPPHONEALT14DAY"
-	| "DUPPHONEALT15DAY"
-	| "DUPPHONEALT21DAY"
-	| "DUPPHONEALT28DAY"
-	| "DUPPHONEALT30DAY"
-	| "DUPPHONEALT60DAY"
-	| "DUPPHONEALT90DAY"
-	| "DUPPHONEALT180DAY"
-	| "DUPPHONEALT360DAY";
+	| "DUPNAMEPHONESYS";
+
+/** Day-bound suffixes for time-limited duplicate checks */
+type DuplicateCheckDayBound =
+	| "1DAY"
+	| "2DAY"
+	| "3DAY"
+	| "7DAY"
+	| "14DAY"
+	| "15DAY"
+	| "21DAY"
+	| "28DAY"
+	| "30DAY"
+	| "60DAY"
+	| "90DAY"
+	| "180DAY"
+	| "360DAY";
+
+/** Duplicate check methods — base types or any base with a day-bound suffix (e.g. "DUPLIST30DAY") */
+export type DuplicateCheck =
+	| DuplicateCheckBase
+	| `${DuplicateCheckBase}${DuplicateCheckDayBound}`;
 
 /** Search method for update_lead */
 export type SearchMethod = "LEAD_ID" | "VENDOR_LEAD_CODE" | "PHONE_NUMBER";

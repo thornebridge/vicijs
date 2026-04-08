@@ -100,7 +100,7 @@ export interface CallDispoReportParams extends OutputParams {
 	campaigns?: string;
 	/** Dash-delimited in-group IDs */
 	ingroups?: string;
-	/** Dash-delimited DID numbers */
+	/** Dash-delimited DID numbers. Note: ViciDial docs also reference this as "did_patterns" in examples. */
 	dids?: string;
 	/** YYYY-MM-DD format, defaults to today */
 	queryDate?: string;
@@ -382,6 +382,7 @@ export interface UpdateUserParams {
 	groupId?: string;
 	resetPassword?: number;
 	inGroups?: string;
+	/** Undocumented in official API but functional — triggers user deletion */
 	deleteUser?: "Y";
 }
 
@@ -396,7 +397,7 @@ export interface UpdateRemoteAgentParams {
 	agentUser: string;
 	status?: RemoteAgentStatus;
 	campaignId?: string;
-	numberOfLines?: string;
+	numberOfLines?: number;
 }
 
 export interface UserDetailsParams extends OutputParams {
