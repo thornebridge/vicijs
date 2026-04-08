@@ -349,6 +349,35 @@ tr:hover { background: #f0f0ff; }
 .fn { color: #82aaff; }
 .cm { color: #666; }
 .typ { color: #ffcb6b; }
+
+/* ─── REFERENCE PAGE ─────────────────────────────────────── */
+.fn-tag {
+  background: var(--vici-blue);
+  color: #fff;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.extends {
+  font-size: 11px;
+  color: #888;
+  font-weight: normal;
+  font-style: italic;
+}
+
+#page-reference h3 {
+  margin-top: 24px;
+  padding: 6px 0;
+  border-bottom: 1px solid #dde;
+}
+
+#page-reference table code {
+  font-size: 11px;
+  white-space: nowrap;
+}
 </style>
 </head>
 <body>
@@ -683,7 +712,8 @@ tr:hover { background: #f0f0ff; }
 
 <!-- ═══ REFERENCE ═══ -->
 <div class="page" id="page-reference">
-  <h1>Reference</h1>
+  <h1>Full API Reference</h1>
+  <p>Every interface, every parameter, every type. Generated from source.</p>
 
   <h2>Response Parsing</h2>
   <p>ViciDial returns pipe-delimited text. Use the built-in schemas to map fields:</p>
@@ -696,28 +726,990 @@ lead.first_name;     <span class="cm">// 'John'</span>
 lead.phone_number;   <span class="cm">// '5551234567'</span>
 lead.status;          <span class="cm">// 'SALE'</span></pre>
 
+<h2>Agent API &mdash; ViciAgent</h2>
+<p>Endpoint: <code>/agc/api.php</code> &mdash; All methods require <code>agentUser</code> in config.</p>
+<h3 id="ref-VersionResponse">VersionResponse <code class="fn-tag">VersionResponse</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>version</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>build</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>date</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>epoch</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+</table>
+<h3 id="ref-external_dial">DialParams <code class="fn-tag">external_dial</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>string</code></td><td></td><td>Phone number to dial, or &quot;MANUALNEXT&quot;</td></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td></td><td>Lead ID to dial (overrides value)</td></tr>
+<tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>search</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>preview</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>focus</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>vendorId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>dialPrefix</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>groupAlias</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>vtigerCallback</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>altUser</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>altDial</code></td><td><code>AltDialValue</code></td><td></td><td></td></tr>
+<tr><td><code>dialIngroup</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>outboundCid</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-external_status">ExternalStatusParams <code class="fn-tag">external_status</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>string</code></td><td>Yes</td><td>Disposition status code</td></tr>
+<tr><td><code>callbackDatetime</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callbackType</code></td><td><code>CallbackType</code></td><td></td><td></td></tr>
+<tr><td><code>callbackComments</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>qmDispoCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-change_ingroups">ChangeIngroupsParams <code class="fn-tag">change_ingroups</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>InGroupChangeMode</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>blended</code></td><td><code>BlendedMode</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>ingroupChoices</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>setAsDefault</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-update_fields">UpdateFieldsParams <code class="fn-tag">update_fields</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>firstName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>lastName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>middleInitial</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>title</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneCode</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>address1</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address2</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address3</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>altPhone</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>city</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>state</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>province</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>postalCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>countryCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>email</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gender</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>dateOfBirth</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>comments</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>securityPhrase</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>sourceId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>vendorLeadCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gmtOffsetNow</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>rank</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>owner</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>formreload</code></td><td><code>1</code></td><td></td><td></td></tr>
+<tr><td><code>scriptreload</code></td><td><code>1</code></td><td></td><td></td></tr>
+<tr><td><code>script2reload</code></td><td><code>1</code></td><td></td><td></td></tr>
+<tr><td><code>emailreload</code></td><td><code>1</code></td><td></td><td></td></tr>
+<tr><td><code>chatreload</code></td><td><code>1</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-set_timer_action">SetTimerActionParams <code class="fn-tag">set_timer_action</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>TimerAction</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>notes</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>rank</code></td><td><code>number</code></td><td></td><td>Seconds elapsed before action triggers</td></tr>
+</table>
+<h3 id="ref-ra_call_control">RaCallControlParams <code class="fn-tag">ra_call_control</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>string</code></td><td>Yes</td><td>Call ID from CallerIDname or SIP header</td></tr>
+<tr><td><code>stage</code></td><td><code>RaCallControlStage</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>ingroupChoices</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>status</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-transfer_conference">TransferConferenceParams <code class="fn-tag">transfer_conference</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>TransferConferenceAction</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>ingroupChoices</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>consultative</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>dialOverride</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>groupAlias</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>cidChoice</code></td><td><code>CidChoice</code></td><td></td><td></td></tr>
+<tr><td><code>multiDialPhones</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>mdCheck</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>twCheck</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-recording">RecordingParams <code class="fn-tag">recording</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>RecordingAction</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>stage</code></td><td><code>string</code></td><td></td><td>Text appended to filename (max 14 chars)</td></tr>
+</table>
+<h3 id="ref-stereo_recording">StereoRecordingParams <code class="fn-tag">stereo_recording</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>StereoRecordingAction</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>stage</code></td><td><code>string</code></td><td></td><td>Text appended to filename (max 14 chars)</td></tr>
+</table>
+<h3 id="ref-audio_playback">AudioPlaybackParams <code class="fn-tag">audio_playback</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>stage</code></td><td><code>AudioPlaybackStage</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>value</code></td><td><code>string</code></td><td></td><td>Audio filename without extension (required for PLAY)</td></tr>
+<tr><td><code>dialOverride</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-switch_lead">SwitchLeadParams <code class="fn-tag">switch_lead</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>vendorLeadCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-force_fronter_leave_3way">ForceFronterParams <code class="fn-tag">force_fronter_leave_3way</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>FronterSearchScope</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-send_notification">SendNotificationParams <code class="fn-tag">send_notification</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>recipientType</code></td><td><code>NotificationRecipientType</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>recipient</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>notificationDate</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>notificationText</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>textSize</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>textFont</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>textWeight</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>textColor</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>showConfetti</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>duration</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>maxParticleCount</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>particleSpeed</code></td><td><code>number</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-vm_message">VmMessageParams <code class="fn-tag">vm_message</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>string</code></td><td>Yes</td><td>Audio file(s) — single filename or pipe-separated list</td></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-refresh_panel">RefreshPanelParams <code class="fn-tag">refresh_panel</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>formreload</code></td><td><code>1</code></td><td></td><td></td></tr>
+<tr><td><code>scriptreload</code></td><td><code>1</code></td><td></td><td></td></tr>
+<tr><td><code>script2reload</code></td><td><code>1</code></td><td></td><td></td></tr>
+<tr><td><code>emailreload</code></td><td><code>1</code></td><td></td><td></td></tr>
+<tr><td><code>chatreload</code></td><td><code>1</code></td><td></td><td></td></tr>
+<tr><td><code>callbacksreload</code></td><td><code>1</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-external_add_lead">ExternalAddLeadParams <code class="fn-tag">external_add_lead</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>dncCheck</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>campaignDncCheck</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>firstName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>lastName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address1</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address2</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address3</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>altPhone</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>city</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>comments</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>countryCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>dateOfBirth</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>email</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gender</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gmtOffsetNow</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>middleInitial</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>postalCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>province</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>securityPhrase</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>sourceId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>state</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>title</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>vendorLeadCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>rank</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>owner</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-WebphoneUrlResponse">WebphoneUrlResponse <code class="fn-tag">WebphoneUrlResponse</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>url</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+</table>
+<h3 id="ref-st_login_log">StLoginLogParams <code class="fn-tag">st_login_log</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>value</code></td><td><code>string</code></td><td>Yes</td><td>CRM AgentID to lookup</td></tr>
+<tr><td><code>vendorId</code></td><td><code>string</code></td><td>Yes</td><td>CRM TeamID to associate</td></tr>
+</table>
+
+<h2>Admin API &mdash; ViciAdmin</h2>
+<p>Endpoint: <code>/vicidial/non_agent_api.php</code></p>
+<h2>Leads (admin.leads)</h2>
+<h3 id="ref-add_lead">AddLeadParams <code class="fn-tag">add_lead</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>listId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>dncCheck</code></td><td><code>DNCCheck</code></td><td></td><td></td></tr>
+<tr><td><code>campaignDncCheck</code></td><td><code>DNCCheck</code></td><td></td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>addToHopper</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>hopperPriority</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>hopperLocalCallTimeCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>duplicateCheck</code></td><td><code>DuplicateCheck | string</code></td><td></td><td></td></tr>
+<tr><td><code>usacanPrefixCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>usacanAreacodeCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>nanpaAcPrefixCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>customFields</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>tzMethod</code></td><td><code>TZMethod</code></td><td></td><td></td></tr>
+<tr><td><code>lookupState</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>callback</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>callbackStatus</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callbackDatetime</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callbackType</code></td><td><code>CallbackType</code></td><td></td><td></td></tr>
+<tr><td><code>callbackUser</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callbackComments</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>listExistsCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>vendorLeadCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>sourceId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gmtOffsetNow</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>title</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>firstName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>middleInitial</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>lastName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address1</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address2</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address3</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>city</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>state</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>province</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>postalCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>countryCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gender</code></td><td><code>Gender</code></td><td></td><td></td></tr>
+<tr><td><code>dateOfBirth</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>altPhone</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>email</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>securityPhrase</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>comments</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>multiAltPhones</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>rank</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>owner</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>entryListId</code></td><td><code>number</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-update_lead">UpdateLeadParams <code class="fn-tag">update_lead</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>vendorLeadCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>searchMethod</code></td><td><code>SearchMethod | string</code></td><td></td><td></td></tr>
+<tr><td><code>searchLocation</code></td><td><code>SearchLocation</code></td><td></td><td></td></tr>
+<tr><td><code>listId</code></td><td><code>number</code></td><td></td><td>List to search in when search_location=LIST, or list for insert_if_not_found</td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td>Campaign ID, required for callbacks</td></tr>
+<tr><td><code>insertIfNotFound</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>records</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>noUpdate</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>customFields</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>deleteLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>deleteCfData</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>resetLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>updatePhoneNumber</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>listExistsCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>archivedLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>callback</code></td><td><code>&quot;Y&quot; | &quot;N&quot; | &quot;REMOVE&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>callbackStatus</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callbackDatetime</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callbackType</code></td><td><code>CallbackType</code></td><td></td><td></td></tr>
+<tr><td><code>callbackUser</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callbackComments</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>addToHopper</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>removeFromHopper</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>hopperPriority</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>hopperLocalCallTimeCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>userField</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>listIdField</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>status</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>sourceId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gmtOffsetNow</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>title</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>firstName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>middleInitial</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>lastName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address1</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address2</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address3</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>city</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>state</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>province</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>postalCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>countryCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gender</code></td><td><code>Gender</code></td><td></td><td></td></tr>
+<tr><td><code>dateOfBirth</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>altPhone</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>email</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>securityPhrase</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>comments</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>rank</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>owner</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>calledCount</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>entryListId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>forceEntryListId</code></td><td><code>number</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-batch_update_lead">BatchUpdateLeadParams <code class="fn-tag">batch_update_lead</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>leadIds</code></td><td><code>string</code></td><td>Yes</td><td>Comma-separated lead IDs (max 100)</td></tr>
+<tr><td><code>records</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>listExistsCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>resetLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>archivedLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>userField</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>listIdField</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>status</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>vendorLeadCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>sourceId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gmtOffsetNow</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>title</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>firstName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>middleInitial</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>lastName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address1</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address2</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>address3</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>city</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>state</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>province</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>postalCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>countryCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>gender</code></td><td><code>Gender</code></td><td></td><td></td></tr>
+<tr><td><code>dateOfBirth</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>altPhone</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>email</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>securityPhrase</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>comments</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>rank</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>owner</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>calledCount</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-lead_field_info">LeadFieldInfoParams <code class="fn-tag">lead_field_info</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>fieldName</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>customFields</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>listId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>archivedLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-lead_all_info">LeadAllInfoParams <code class="fn-tag">lead_all_info</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customFields</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>forceEntryListId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>archivedLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-lead_callback_info">LeadCallbackInfoParams <code class="fn-tag">lead_callback_info</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>searchLocation</code></td><td><code>CallbackSearchLocation</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-lead_search">LeadSearchParams <code class="fn-tag">lead_search</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>records</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>archivedLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>header</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-lead_status_search">LeadStatusSearchParams <code class="fn-tag">lead_status_search</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>status</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>date</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>customFields</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>listId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>archivedLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-ccc_lead_info">CccLeadInfoParams <code class="fn-tag">ccc_lead_info</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>callId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+</table>
+<h3 id="ref-callid_info">CallidInfoParams <code class="fn-tag">callid_info</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>callId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>detail</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+</table>
+<h2>Users (admin.users)</h2>
+<h3 id="ref-add_user">AddUserParams <code class="fn-tag">add_user</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>agentPass</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>agentUserLevel</code></td><td><code>number</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>agentFullName</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>agentUserGroup</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>phoneLogin</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phonePass</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>hotkeysActive</code></td><td><code>0 | 1</code></td><td></td><td></td></tr>
+<tr><td><code>voicemailId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>email</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customOne</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customTwo</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customThree</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customFour</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customFive</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>wrapupSecondsOverride</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>agentChooseIngroups</code></td><td><code>0 | 1</code></td><td></td><td></td></tr>
+<tr><td><code>agentChooseBlended</code></td><td><code>0 | 1</code></td><td></td><td></td></tr>
+<tr><td><code>closerDefaultBlended</code></td><td><code>0 | 1</code></td><td></td><td></td></tr>
+<tr><td><code>inGroups</code></td><td><code>string</code></td><td></td><td>Pipe-delimited ingroup list</td></tr>
+</table>
+<h3 id="ref-update_user">UpdateUserParams <code class="fn-tag">update_user</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>agentPass</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>agentUserLevel</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>agentFullName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>agentUserGroup</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneLogin</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phonePass</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>hotkeysActive</code></td><td><code>0 | 1</code></td><td></td><td></td></tr>
+<tr><td><code>voicemailId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>email</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customOne</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customTwo</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customThree</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customFour</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customFive</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>active</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>wrapupSecondsOverride</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>campaignRank</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>campaignGrade</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>ingroupRank</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>ingroupGrade</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>campRgOnly</code></td><td><code>0 | 1</code></td><td></td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>ingrpRgOnly</code></td><td><code>0 | 1</code></td><td></td><td></td></tr>
+<tr><td><code>groupId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>resetPassword</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>inGroups</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>deleteUser</code></td><td><code>&quot;Y&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-copy_user">CopyUserParams <code class="fn-tag">copy_user</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>agentPass</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>agentFullName</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>sourceUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+</table>
+<h3 id="ref-update_remote_agent">UpdateRemoteAgentParams <code class="fn-tag">update_remote_agent</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>status</code></td><td><code>RemoteAgentStatus</code></td><td></td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>numberOfLines</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-user_details">UserDetailsParams <code class="fn-tag">user_details</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+</table>
+<h3 id="ref-agent_campaigns">AgentCampaignsParams <code class="fn-tag">agent_campaigns</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>ignoreAgentdirect</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h2>Monitoring (admin.monitoring)</h2>
+<h3 id="ref-blind_monitor">BlindMonitorParams <code class="fn-tag">blind_monitor</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>phoneLogin</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>sessionId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>serverIp</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>stage</code></td><td><code>BlindMonitorStage</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-agent_ingroup_info">AgentIngroupInfoParams <code class="fn-tag">agent_ingroup_info</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>stage</code></td><td><code>&quot;info&quot; | &quot;change&quot; | &quot;text&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-agent_status">AgentStatusParams <code class="fn-tag">agent_status</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>includeIp</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-user_group_status">UserGroupStatusParams <code class="fn-tag">user_group_status</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>userGroups</code></td><td><code>string</code></td><td>Yes</td><td>Pipe-delimited group list (e.g., &quot;ADMIN|AGENTS&quot;)</td></tr>
+</table>
+<h3 id="ref-in_group_status">InGroupStatusParams <code class="fn-tag">in_group_status</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>inGroups</code></td><td><code>string</code></td><td>Yes</td><td>Pipe-delimited group list</td></tr>
+</table>
+<h3 id="ref-logged_in_agents">LoggedInAgentsParams <code class="fn-tag">logged_in_agents</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>campaigns</code></td><td><code>string</code></td><td></td><td>Pipe-delimited campaign list (e.g. &quot;TESTCAMP|INBOUND&quot;), default is all</td></tr>
+<tr><td><code>userGroups</code></td><td><code>string</code></td><td></td><td>Pipe-delimited user group list (e.g. &quot;ADMIN|AGENTS&quot;), default is all</td></tr>
+<tr><td><code>showSubStatus</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td>Show agent sub-status and pause_code</td></tr>
+</table>
+<h2>Reporting (admin.reporting)</h2>
+<h3 id="ref-recording_lookup">RecordingLookupParams <code class="fn-tag">recording_lookup</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>leadId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>date</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>uniqueid</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>extension</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>duration</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-did_log_export">DidLogExportParams <code class="fn-tag">did_log_export</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>date</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+</table>
+<h3 id="ref-agent_stats_export">AgentStatsExportParams <code class="fn-tag">agent_stats_export</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>datetimeStart</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>datetimeEnd</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>agentUser</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>timeFormat</code></td><td><code>TimeFormat</code></td><td></td><td></td></tr>
+<tr><td><code>groupByCampaign</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-call_status_stats">CallStatusStatsParams <code class="fn-tag">call_status_stats</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>campaigns</code></td><td><code>string</code></td><td>Yes</td><td>Dash-delimited campaign IDs, or &quot;---ALL---&quot; / &quot;ALLCAMPAIGNS&quot;</td></tr>
+<tr><td><code>queryDate</code></td><td><code>string</code></td><td></td><td>YYYY-MM-DD format, defaults to today</td></tr>
+<tr><td><code>ingroups</code></td><td><code>string</code></td><td></td><td>Dash-delimited in-group IDs</td></tr>
+<tr><td><code>statuses</code></td><td><code>string</code></td><td></td><td>Dash-delimited status codes</td></tr>
+</table>
+<h3 id="ref-call_dispo_report">CallDispoReportParams <code class="fn-tag">call_dispo_report</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>campaigns</code></td><td><code>string</code></td><td></td><td>Dash-delimited campaign IDs (at least one of campaigns/ingroups/didPatterns required)</td></tr>
+<tr><td><code>ingroups</code></td><td><code>string</code></td><td></td><td>Dash-delimited in-group IDs</td></tr>
+<tr><td><code>dids</code></td><td><code>string</code></td><td></td><td>Dash-delimited DID numbers</td></tr>
+<tr><td><code>queryDate</code></td><td><code>string</code></td><td></td><td>YYYY-MM-DD format, defaults to today</td></tr>
+<tr><td><code>endDate</code></td><td><code>string</code></td><td></td><td>YYYY-MM-DD format, defaults to today</td></tr>
+<tr><td><code>statuses</code></td><td><code>string</code></td><td></td><td>Dash-delimited status codes</td></tr>
+<tr><td><code>categories</code></td><td><code>string</code></td><td></td><td>Dash-delimited status categories</td></tr>
+<tr><td><code>users</code></td><td><code>string</code></td><td></td><td>Dash-delimited user list</td></tr>
+<tr><td><code>statusBreakdown</code></td><td><code>&quot;0&quot; | &quot;1&quot;</code></td><td></td><td>Show breakdown of all statuses</td></tr>
+<tr><td><code>showPercentages</code></td><td><code>&quot;0&quot; | &quot;1&quot;</code></td><td></td><td>Show percentages (requires statusBreakdown=1)</td></tr>
+<tr><td><code>fileDownload</code></td><td><code>&quot;0&quot; | &quot;1&quot;</code></td><td></td><td>Download as CSV file</td></tr>
+</table>
+<h3 id="ref-phone_number_log">PhoneNumberLogParams <code class="fn-tag">phone_number_log</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td>Yes</td><td>Comma-separated phone numbers</td></tr>
+<tr><td><code>detail</code></td><td><code>PhoneNumberLogDetail</code></td><td></td><td></td></tr>
+<tr><td><code>type</code></td><td><code>PhoneNumberLogType</code></td><td></td><td></td></tr>
+<tr><td><code>archivedLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h2>Campaigns (admin.campaigns)</h2>
+<h3 id="ref-update_campaign">UpdateCampaignParams <code class="fn-tag">update_campaign</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>campaignName</code></td><td><code>string</code></td><td></td><td>6-40 characters</td></tr>
+<tr><td><code>active</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>autoDialLevel</code></td><td><code>string</code></td><td></td><td>2-5 characters, e.g. &quot;3.0&quot;</td></tr>
+<tr><td><code>adaptiveMaximumLevel</code></td><td><code>string</code></td><td></td><td>3-20 digits</td></tr>
+<tr><td><code>campaignVdadExten</code></td><td><code>string</code></td><td></td><td>3-20 characters</td></tr>
+<tr><td><code>hopperLevel</code></td><td><code>number</code></td><td></td><td>1-2000</td></tr>
+<tr><td><code>resetHopper</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Reset the campaign hopper</td></tr>
+<tr><td><code>dialMethod</code></td><td><code>| &quot;MANUAL&quot; | &quot;RATIO&quot; | &quot;INBOUND_MAN&quot; | &quot;ADAPT_AVERAGE&quot; | &quot;ADAPT_HARD_LIMIT&quot; | &quot;ADAPT_TAPERED&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>dialTimeout</code></td><td><code>number</code></td><td></td><td>1-120 seconds</td></tr>
+<tr><td><code>listOrder</code></td><td><code>string</code></td><td></td><td>Lead ordering — e.g. &quot;UP&quot;, &quot;DOWN&quot;, &quot;RANDOM 2nd NEW&quot;, &quot;DOWN COUNT&quot;</td></tr>
+<tr><td><code>listOrderRandomize</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Randomize hopper loading within list order</td></tr>
+<tr><td><code>listOrderSecondary</code></td><td><code>string</code></td><td></td><td>e.g. &quot;LEAD_ASCEND&quot;, &quot;CALLTIME_DESCEND&quot;, &quot;VENDOR_ASCEND&quot;</td></tr>
+<tr><td><code>outboundCid</code></td><td><code>string</code></td><td></td><td>1-20 digits</td></tr>
+<tr><td><code>dialStatusAdd</code></td><td><code>string</code></td><td></td><td>1-6 character status code to add to dial statuses</td></tr>
+<tr><td><code>dialStatusRemove</code></td><td><code>string</code></td><td></td><td>1-6 character status code to remove from dial statuses</td></tr>
+<tr><td><code>leadFilterId</code></td><td><code>string</code></td><td></td><td>Valid filter ID or &quot;---NONE---&quot;</td></tr>
+<tr><td><code>xferconfOne</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 1 (1-50 characters)</td></tr>
+<tr><td><code>xferconfTwo</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 2 (1-50 characters)</td></tr>
+<tr><td><code>xferconfThree</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 3 (1-50 characters)</td></tr>
+<tr><td><code>xferconfFour</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 4 (1-50 characters)</td></tr>
+<tr><td><code>xferconfFive</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 5 (1-50 characters)</td></tr>
+<tr><td><code>dispoCallUrl</code></td><td><code>string</code></td><td></td><td>Disposition URL — must be URL-encoded. Set to &quot;ALT&quot; to use alt URLs</td></tr>
+<tr><td><code>webformOne</code></td><td><code>string</code></td><td></td><td>Agent Screen Webform 1 URL — must be URL-encoded</td></tr>
+<tr><td><code>webformTwo</code></td><td><code>string</code></td><td></td><td>Agent Screen Webform 2 URL — must be URL-encoded</td></tr>
+<tr><td><code>webformThree</code></td><td><code>string</code></td><td></td><td>Agent Screen Webform 3 URL — must be URL-encoded</td></tr>
+</table>
+<h3 id="ref-campaigns_list">CampaignsListParams <code class="fn-tag">campaigns_list</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-hopper_list">HopperListParams <code class="fn-tag">hopper_list</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>searchMethod</code></td><td><code>&quot;BLOCK&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-hopper_bulk_insert">HopperBulkInsertParams <code class="fn-tag">hopper_bulk_insert</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>leadIds</code></td><td><code>string</code></td><td>Yes</td><td>Comma-separated lead IDs (max 1000)</td></tr>
+<tr><td><code>hopperPriority</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>hopperLocalCallTimeCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h2>Lists (admin.lists)</h2>
+<h3 id="ref-add_list">AddListParams <code class="fn-tag">add_list</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>listId</code></td><td><code>number</code></td><td>Yes</td><td>2-14 digits</td></tr>
+<tr><td><code>listName</code></td><td><code>string</code></td><td>Yes</td><td>2-30 characters</td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td>Yes</td><td>2-8 characters, must be valid</td></tr>
+<tr><td><code>active</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>listDescription</code></td><td><code>string</code></td><td></td><td>Up to 255 chars. Use &quot;--BLANK--&quot; to empty.</td></tr>
+<tr><td><code>outboundCid</code></td><td><code>string</code></td><td></td><td>6-20 digits</td></tr>
+<tr><td><code>script</code></td><td><code>string</code></td><td></td><td>1-10 chars, must be valid script</td></tr>
+<tr><td><code>amMessage</code></td><td><code>string</code></td><td></td><td>2-100 characters</td></tr>
+<tr><td><code>dropInboundGroup</code></td><td><code>string</code></td><td></td><td>1-10 chars, must be valid in-group</td></tr>
+<tr><td><code>webFormAddress</code></td><td><code>string</code></td><td></td><td>6-100 chars, URL-encodable</td></tr>
+<tr><td><code>webFormAddressTwo</code></td><td><code>string</code></td><td></td><td>6-100 chars, URL-encodable</td></tr>
+<tr><td><code>webFormAddressThree</code></td><td><code>string</code></td><td></td><td>6-100 chars, URL-encodable</td></tr>
+<tr><td><code>resetTime</code></td><td><code>string</code></td><td></td><td>4-100 chars, valid 4-digit groups of 24-hour time (e.g. &quot;0900-1700-2359&quot;)</td></tr>
+<tr><td><code>tzMethod</code></td><td><code>| &quot;COUNTRY_AND_AREA_CODE&quot; | &quot;POSTAL_CODE&quot; | &quot;NANPA_PREFIX&quot; | &quot;OWNER_TIME_ZONE_CODE&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>localCallTime</code></td><td><code>string</code></td><td></td><td>Valid call time ID or &quot;campaign&quot; (default)</td></tr>
+<tr><td><code>expirationDate</code></td><td><code>string</code></td><td></td><td>YYYY-MM-DD format</td></tr>
+<tr><td><code>xferconfOne</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 1 (1-50 characters)</td></tr>
+<tr><td><code>xferconfTwo</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 2 (1-50 characters)</td></tr>
+<tr><td><code>xferconfThree</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 3 (1-50 characters)</td></tr>
+<tr><td><code>xferconfFour</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 4 (1-50 characters)</td></tr>
+<tr><td><code>xferconfFive</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 5 (1-50 characters)</td></tr>
+<tr><td><code>customFieldsCopy</code></td><td><code>number</code></td><td></td><td>2-14 digits, valid list ID with custom fields. Requires &quot;Custom Fields Modify&quot; permission.</td></tr>
+<tr><td><code>customCopyMethod</code></td><td><code>&quot;APPEND&quot; | &quot;UPDATE&quot; | &quot;REPLACE&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-update_list">UpdateListParams <code class="fn-tag">update_list</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>listId</code></td><td><code>number</code></td><td>Yes</td><td>2-14 digits</td></tr>
+<tr><td><code>insertIfNotFound</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Attempt insert as new list if no match</td></tr>
+<tr><td><code>resetList</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Reset Called-Since-Last-Reset flag for all leads</td></tr>
+<tr><td><code>deleteList</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Delete the list</td></tr>
+<tr><td><code>deleteLeads</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Delete all leads with this list_id</td></tr>
+<tr><td><code>archivedLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Affect only vicidial_list_archive leads</td></tr>
+<tr><td><code>listName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>active</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>listDescription</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>outboundCid</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>script</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>amMessage</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>dropInboundGroup</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>webFormAddress</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>webFormAddressTwo</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>webFormAddressThree</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>resetTime</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>tzMethod</code></td><td><code>| &quot;COUNTRY_AND_AREA_CODE&quot; | &quot;POSTAL_CODE&quot; | &quot;NANPA_PREFIX&quot; | &quot;OWNER_TIME_ZONE_CODE&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>localCallTime</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>expirationDate</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>xferconfOne</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>xferconfTwo</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>xferconfThree</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>xferconfFour</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>xferconfFive</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>customFieldsCopy</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>customCopyMethod</code></td><td><code>&quot;APPEND&quot; | &quot;UPDATE&quot; | &quot;REPLACE&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>customFieldsAdd</code></td><td><code>&quot;Y&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>customFieldsUpdate</code></td><td><code>&quot;Y&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>customFieldsDelete</code></td><td><code>&quot;Y&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>fieldLabel</code></td><td><code>string</code></td><td></td><td>Required for custom field add/update/delete</td></tr>
+<tr><td><code>fieldName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>fieldSize</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>fieldType</code></td><td><code>| &quot;TEXT&quot; | &quot;SELECT&quot; | &quot;AREA&quot; | &quot;MULTI&quot; | &quot;RADIO&quot; | &quot;CHECKBOX&quot; | &quot;DATE&quot; | &quot;TIME&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>fieldRank</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>fieldOrder</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>fieldRerank</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>fieldMax</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>fieldDefault</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>fieldOptions</code></td><td><code>string</code></td><td></td><td>Use %0A for newline, %7C for pipe</td></tr>
+<tr><td><code>fieldDuplicate</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>fieldDescription</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>fieldHelp</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>fieldRequired</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>multiPosition</code></td><td><code>&quot;HORIZONTAL&quot; | &quot;VERTICAL&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>namePosition</code></td><td><code>&quot;TOP&quot; | &quot;LEFT&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>fieldEncrypt</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>fieldShowHide</code></td><td><code>| &quot;DISABLED&quot; | &quot;X_OUT_ALL&quot; | &quot;LAST_1&quot; | &quot;LAST_2&quot; | &quot;LAST_3&quot; | &quot;LAST_4&quot; | &quot;FIRST_1_LAST_4&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-list_info">ListInfoParams <code class="fn-tag">list_info</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>listId</code></td><td><code>number</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>dialableCount</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>leadsCounts</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Include counts of all leads and NEW status leads</td></tr>
+<tr><td><code>archivedLead</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Query only vicidial_list_archive leads</td></tr>
+</table>
+<h3 id="ref-list_custom_fields">ListCustomFieldsParams <code class="fn-tag">list_custom_fields</code> <span class="extends">extends OutputParams</span></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>listId</code></td><td><code>number | string</code></td><td></td><td>List ID, or &quot;---ALL---&quot; for all lists</td></tr>
+<tr><td><code>customOrder</code></td><td><code>&quot;table_order&quot; | &quot;alpha_up&quot; | &quot;alpha_down&quot;</code></td><td></td><td>Field ordering: table_order (default), alpha_up, alpha_down</td></tr>
+</table>
+<h2>Phones (admin.phones)</h2>
+<h3 id="ref-add_phone">AddPhoneParams <code class="fn-tag">add_phone</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>extension</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>dialplanNumber</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>voicemailId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>phoneLogin</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>phonePass</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>serverIp</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>protocol</code></td><td><code>PhoneProtocol</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>registrationPassword</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>phoneFullName</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>localGmt</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>outboundCid</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>phoneContext</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>email</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>adminUserGroup</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>isWebphone</code></td><td><code>WebphoneType</code></td><td></td><td></td></tr>
+<tr><td><code>webphoneAutoAnswer</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>useExternalServerIp</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>templateId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>onHookAgent</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-update_phone">UpdatePhoneParams <code class="fn-tag">update_phone</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>extension</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>serverIp</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>deletePhone</code></td><td><code>&quot;Y&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>dialplanNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>voicemailId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneLogin</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phonePass</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>protocol</code></td><td><code>PhoneProtocol</code></td><td></td><td></td></tr>
+<tr><td><code>registrationPassword</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneFullName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>localGmt</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>outboundCid</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>outboundAltCid</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneContext</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>email</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>adminUserGroup</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneRingTimeout</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>deleteVmAfterEmail</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>isWebphone</code></td><td><code>WebphoneType</code></td><td></td><td></td></tr>
+<tr><td><code>webphoneAutoAnswer</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>useExternalServerIp</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>templateId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>onHookAgent</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-add_phone_alias">AddPhoneAliasParams <code class="fn-tag">add_phone_alias</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>aliasId</code></td><td><code>string</code></td><td>Yes</td><td>2-20 characters</td></tr>
+<tr><td><code>phoneLogins</code></td><td><code>string</code></td><td>Yes</td><td>Comma-separated phone logins (2-255 characters)</td></tr>
+<tr><td><code>aliasName</code></td><td><code>string</code></td><td>Yes</td><td>1-50 characters</td></tr>
+</table>
+<h3 id="ref-update_phone_alias">UpdatePhoneAliasParams <code class="fn-tag">update_phone_alias</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>aliasId</code></td><td><code>string</code></td><td>Yes</td><td>2-20 characters</td></tr>
+<tr><td><code>phoneLogins</code></td><td><code>string</code></td><td>Yes</td><td>Comma-separated phone logins (2-255 characters)</td></tr>
+<tr><td><code>aliasName</code></td><td><code>string</code></td><td>Yes</td><td>1-50 characters</td></tr>
+<tr><td><code>deleteAlias</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td>Delete the phone alias</td></tr>
+</table>
+<h2>DIDs (admin.dids)</h2>
+<h3 id="ref-add_did">AddDidParams <code class="fn-tag">add_did</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>didPattern</code></td><td><code>string</code></td><td>Yes</td><td>2-50 characters. URL-encode special chars (e.g. + as %2B)</td></tr>
+<tr><td><code>didDescription</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>active</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>didRoute</code></td><td><code>| &quot;EXTEN&quot; | &quot;VOICEMAIL&quot; | &quot;AGENT&quot; | &quot;PHONE&quot; | &quot;IN_GROUP&quot; | &quot;CALLMENU&quot; | &quot;VMAIL_NO_INST&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>recordCall</code></td><td><code>&quot;Y&quot; | &quot;N&quot; | &quot;Y_QUEUESTOP&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>extension</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>extenContext</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>voicemailExt</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneExtension</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>serverIp</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>group</code></td><td><code>string</code></td><td></td><td>Valid in-group group_id</td></tr>
+<tr><td><code>menuId</code></td><td><code>string</code></td><td></td><td>Valid call menu menu_id</td></tr>
+<tr><td><code>filterCleanCidNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callHandleMethod</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>agentSearchMethod</code></td><td><code>&quot;LO&quot; | &quot;LB&quot; | &quot;SO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>listId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>entryListId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-copy_did">CopyDidParams <code class="fn-tag">copy_did</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>sourceDidPattern</code></td><td><code>string</code></td><td>Yes</td><td>2-50 characters, must be an existing DID</td></tr>
+<tr><td><code>newDids</code></td><td><code>string</code></td><td>Yes</td><td>2-2000 characters, comma-separated for multiple DIDs</td></tr>
+<tr><td><code>didDescription</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-update_did">UpdateDidParams <code class="fn-tag">update_did</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>didPattern</code></td><td><code>string</code></td><td>Yes</td><td>2-50 characters, must be an existing DID</td></tr>
+<tr><td><code>didDescription</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>active</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>didRoute</code></td><td><code>| &quot;EXTEN&quot; | &quot;VOICEMAIL&quot; | &quot;AGENT&quot; | &quot;PHONE&quot; | &quot;IN_GROUP&quot; | &quot;CALLMENU&quot; | &quot;VMAIL_NO_INST&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>recordCall</code></td><td><code>&quot;Y&quot; | &quot;N&quot; | &quot;Y_QUEUESTOP&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>extension</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>extenContext</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>voicemailExt</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneExtension</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>serverIp</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>group</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>menuId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>filterCleanCidNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callHandleMethod</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>agentSearchMethod</code></td><td><code>&quot;LO&quot; | &quot;LB&quot; | &quot;SO&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>listId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>entryListId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>deleteDid</code></td><td><code>&quot;Y&quot;</code></td><td></td><td></td></tr>
+</table>
+<h2>DNC (admin.dnc)</h2>
+<h3 id="ref-add_dnc_phone">DncPhoneParams <code class="fn-tag">add_dnc_phone</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+</table>
+<h3 id="ref-add_fpg_phone">FpgPhoneParams <code class="fn-tag">add_fpg_phone</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>group</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+</table>
+<h2>System (admin.system)</h2>
+<h3 id="ref-check_phone_number">CheckPhoneNumberParams <code class="fn-tag">check_phone_number</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>phoneNumber</code></td><td><code>string</code></td><td>Yes</td><td>6-16 digits</td></tr>
+<tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td>1-4 digits, defaults to 1</td></tr>
+<tr><td><code>localCallTime</code></td><td><code>string</code></td><td>Yes</td><td>Must be a valid call time ID in the system</td></tr>
+<tr><td><code>dncCheck</code></td><td><code>DNCCheck</code></td><td></td><td></td></tr>
+<tr><td><code>campaignDncCheck</code></td><td><code>DNCCheck</code></td><td></td><td></td></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>usacanPrefixCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>usacanAreacodeCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>nanpaAcPrefixCheck</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>tzMethod</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>postalCode</code></td><td><code>string</code></td><td></td><td>5 digits, USA zipcodes only. Needed for POSTAL tz_method</td></tr>
+<tr><td><code>state</code></td><td><code>string</code></td><td></td><td>2 letters. Needed if state call time rules enabled</td></tr>
+<tr><td><code>owner</code></td><td><code>string</code></td><td></td><td>2-5 letters. Needed for TZCODE tz_method</td></tr>
+</table>
+<h3 id="ref-add_group_alias">AddGroupAliasParams <code class="fn-tag">add_group_alias</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>callerIdNumber</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>groupAliasId</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>groupAliasName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>callerIdName</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>active</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>adminUserGroup</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-update_cid_group_entry">UpdateCidGroupEntryParams <code class="fn-tag">update_cid_group_entry</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>cidGroupId</code></td><td><code>string</code></td><td>Yes</td><td>2-20 characters, must be a valid CID Group ID or Campaign ID</td></tr>
+<tr><td><code>areacode</code></td><td><code>string</code></td><td>Yes</td><td>Areacode (e.g. &quot;312&quot;), state (e.g. &quot;FL&quot;), or &quot;---ALL---&quot;</td></tr>
+<tr><td><code>stage</code></td><td><code>&quot;UPDATE&quot; | &quot;ADD&quot; | &quot;DELETE&quot; | &quot;INFO&quot;</code></td><td>Yes</td><td>Action to perform</td></tr>
+<tr><td><code>outboundCid</code></td><td><code>string</code></td><td></td><td>1-20 digits, or &quot;---ALL---&quot;</td></tr>
+<tr><td><code>cidDescription</code></td><td><code>string</code></td><td></td><td>6-50 characters</td></tr>
+<tr><td><code>active</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-update_alt_url">UpdateAltUrlParams <code class="fn-tag">update_alt_url</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>entryType</code></td><td><code>&quot;campaign&quot;</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>urlType</code></td><td><code>&quot;dispo&quot; | &quot;start&quot; | &quot;addlead&quot; | &quot;noagent&quot;</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>altUrlId</code></td><td><code>string | &quot;NEW&quot; | &quot;LIST&quot;</code></td><td></td><td>Existing alt URL ID, &quot;NEW&quot; to create, or &quot;LIST&quot; to list all</td></tr>
+<tr><td><code>active</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>urlRank</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>urlStatuses</code></td><td><code>string</code></td><td></td><td>Space-separated status codes, or &quot;---ALL---&quot;</td></tr>
+<tr><td><code>urlDescription</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>urlLists</code></td><td><code>string</code></td><td></td><td>Space-separated list IDs, or blank for all</td></tr>
+<tr><td><code>urlCallLength</code></td><td><code>number</code></td><td></td><td>Minimum call length in seconds (default: 0)</td></tr>
+<tr><td><code>urlAddress</code></td><td><code>string</code></td><td></td><td>Must be URL-encoded</td></tr>
+</table>
+<h3 id="ref-update_presets">UpdatePresetsParams <code class="fn-tag">update_presets</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>campaignId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>presetName</code></td><td><code>string</code></td><td></td><td>Preset name — can be omitted if only one preset exists for this campaign</td></tr>
+<tr><td><code>action</code></td><td><code>&quot;UPDATE&quot; | &quot;NEW&quot; | &quot;DELETE&quot; | &quot;LIST&quot;</code></td><td></td><td>&quot;UPDATE&quot; (default), &quot;NEW&quot;, &quot;DELETE&quot;, or &quot;LIST&quot;</td></tr>
+<tr><td><code>presetNumber</code></td><td><code>string</code></td><td></td><td>1-50 digits</td></tr>
+<tr><td><code>presetHideNumber</code></td><td><code>&quot;Y&quot; | &quot;N&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>presetDtmf</code></td><td><code>string</code></td><td></td><td>DTMF digits (0-9, P=#, S=*, Q=half-second quiet)</td></tr>
+<tr><td><code>stage</code></td><td><code>OutputFormat</code></td><td></td><td>Output format for LIST action</td></tr>
+<tr><td><code>header</code></td><td><code>&quot;YES&quot; | &quot;NO&quot;</code></td><td></td><td>Include header for LIST action</td></tr>
+</table>
+<h3 id="ref-update_log_entry">UpdateLogEntryParams <code class="fn-tag">update_log_entry</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>callId</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>group</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>status</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+</table>
+
   <h2>Status Code Enums</h2>
-  <p>85+ status codes organized by category:</p>
+  <p>86 status codes organized by category:</p>
   <table>
     <tr><th>Enum</th><th>Codes</th><th>Description</th></tr>
     <tr><td><code>AgentStatus</code></td><td>A, B, DC, DEC, DNC, N, NI, NP, SALE, ALTNUM</td><td>Agent-selectable dispositions</td></tr>
-    <tr><td><code>SystemStatus</code></td><td>NEW, QUEUE, INCALL, DROP, NA, CALLBK, etc.</td><td>Core call flow</td></tr>
+    <tr><td><code>SystemStatus</code></td><td>NEW, QUEUE, INCALL, DROP, XDROP, NA, CALLBK, CBHOLD, INBND</td><td>Core call flow</td></tr>
     <tr><td><code>AMDStatus</code></td><td>AA, AM, AL, AMDXFR, ADAIR</td><td>Answering machine detection</td></tr>
-    <tr><td><code>CPDStatus</code></td><td>CPDATB, CPDB, CPDNA, etc. (13 codes)</td><td>Sangoma call progress</td></tr>
-    <tr><td><code>TransferStatus</code></td><td>XFER, HXFER, RQXFER, RAXFER, etc.</td><td>Transfer/routing</td></tr>
-    <tr><td><code>InboundStatus</code></td><td>HOLDTO, QVMAIL, TIMEOT, AFTHRS, etc.</td><td>Inbound-specific</td></tr>
+    <tr><td><code>AutoDetectStatus</code></td><td>AFAX, AB, ADC, ADCT, ADCCAR</td><td>Carrier auto-detection</td></tr>
+    <tr><td><code>DNCStatus</code></td><td>DNCL, DNCC, DNCCAR</td><td>Do Not Call system</td></tr>
+    <tr><td><code>TransferStatus</code></td><td>PU, PM, XFER, HXFER, RQXFER, RAXFER, IVRXFR, UNKXFR</td><td>Transfer/routing</td></tr>
+    <tr><td><code>CPDStatus</code></td><td>CPDATB, CPDB, CPDNA, CPDREJ, CPDINV, CPDSUA, CPDSI, CPDSNC, CPDSR, CPDSUK, CPDSV, CPDUK, CPDERR</td><td>Sangoma call progress (13 codes)</td></tr>
+    <tr><td><code>ErrorStatus</code></td><td>ERI, DONEM, DISPO, LRERR</td><td>System error states</td></tr>
+    <tr><td><code>SurveyStatus</code></td><td>SVYEXT, SVYVM, SVYHU, SVYREC, SVYCLM</td><td>Survey campaign</td></tr>
+    <tr><td><code>InboundStatus</code></td><td>HOLDTO, QVMAIL, TIMEOT, AFTHRS, NANQUE, WAITTO, PDROP, MAXCAL, CLOSOP, IQNANQ, SRDROP, ACFLTR</td><td>Inbound-specific</td></tr>
+    <tr><td><code>QCStatus</code></td><td>QCFAIL, QCCANC, QCPASS</td><td>Quality control</td></tr>
+    <tr><td><code>MiscStatus</code></td><td>MLINAT, LSMERG, DISMX, UNKAM, UNKAL, NVAINS, PAUSMX, LTMGAD, XAMMAD</td><td>Miscellaneous system</td></tr>
   </table>
 
-  <h2>Agent Events</h2>
-  <p>70 push event types for real-time agent activity tracking:</p>
+  <h2>Agent Events (49 events)</h2>
   <table>
     <tr><th>Category</th><th>Events</th></tr>
-    <tr><td>Session</td><td>logged_in, logged_out, session_disabled, session_empty, session_channels</td></tr>
-    <tr><td>Call</td><td>call_dialed, call_answered, call_dead, agent_hangup, call_script</td></tr>
+    <tr><td>Session</td><td>logged_in, logged_out, logged_out_complete, login_invalid, session_disabled, session_empty, session_channels</td></tr>
+    <tr><td>Agent State</td><td>state_ready, state_paused</td></tr>
+    <tr><td>Call</td><td>call_dialed, call_answered, call_dead, call_script, agent_hangup</td></tr>
+    <tr><td>Dead Trigger</td><td>dead_trigger_audio, dead_trigger_url, dead_trigger_url_sent</td></tr>
+    <tr><td>Communication</td><td>other_answered</td></tr>
     <tr><td>Disposition</td><td>dispo_screen_open, dispo_set, dispo_set_twice</td></tr>
-    <tr><td>Transfer</td><td>transfer_local_closer, transfer_blind, transfer_vmail, transfer_panel_open/closed</td></tr>
     <tr><td>3-Way</td><td>3way_start, 3way_answered, 3way_agent_hangup, 3way_agent_leave</td></tr>
+    <tr><td>Transfer</td><td>transfer_local_closer, transfer_blind, transfer_vmail, transfer_panel_open, transfer_panel_closed</td></tr>
     <tr><td>Park</td><td>park_started, park_retrieved, park_ivr_started, park_ivr_retrieved</td></tr>
+    <tr><td>Screen/UI</td><td>manual_dial_open, callback_select_open, ingroup_screen_open, ingroup_screen_closed, territory_screen_open, territory_screen_closed, contact_search_open, lead_search_open, pause_code_open, customer_gone, blind_monitor_alert</td></tr>
+    <tr><td>System</td><td>agent_alert, time_sync, none_in_session, update_fields</td></tr>
   </table>
 
   <h2>Browser / CORS Setup</h2>
@@ -733,6 +1725,7 @@ lead.status;          <span class="cm">// 'SALE'</span></pre>
     <tr><td><a href="https://vicidial.org/docs/WEBSOCKETS_SUPPORT.txt">WebSocket Docs</a></td><td>Real-time agent event streaming</td></tr>
   </table>
 </div>
+
 
 </div><!-- /content-wrap -->
 
