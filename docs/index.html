@@ -427,8 +427,15 @@ tr:hover { background: #f0f0ff; }
   </table>
 
   <h2>Verified Against Documentation</h2>
-  <p>Every parameter has been cross-referenced against the official ViciDial API docs through 5 automated audit passes. 658 typed fields across 90 API functions &mdash; zero mismatches.</p>
-  <p><a href="https://vicidial.org/docs/AGENT_API.txt">Agent API Reference (51KB)</a> &bull; <a href="https://vicidial.org/docs/NON-AGENT_API.txt">Non-Agent API Reference (168KB)</a></p>
+  <p>Every parameter, enum value, and function name has been cross-referenced against the official ViciDial documentation through 5 automated audit passes.</p>
+  <table>
+    <tr><th>Document</th><th>What We Verified</th><th>Result</th></tr>
+    <tr><td><a href="https://vicidial.org/docs/AGENT_API.txt">Agent API</a> (51KB)</td><td>31 functions, 136 typed fields</td><td>0 mismatches</td></tr>
+    <tr><td><a href="https://vicidial.org/docs/NON-AGENT_API.txt">Non-Agent API</a> (168KB)</td><td>60 functions, 522 typed fields</td><td>0 mismatches</td></tr>
+    <tr><td><a href="https://vicidial.org/docs/VICIDIAL_statuses.txt">Status Codes</a></td><td>86 disposition codes</td><td>86/86 match</td></tr>
+    <tr><td><a href="https://vicidial.org/docs/AGENT_EVENTS_PUSH.txt">Agent Events</a></td><td>49 push event types</td><td>49/49 match</td></tr>
+    <tr><td><a href="https://vicidial.org/docs/CUSTOM_FIELDS.txt">Custom Fields</a></td><td>8 field types</td><td>8/8 match</td></tr>
+  </table>
 </div>
 
 <!-- ═══ QUICKSTART ═══ -->

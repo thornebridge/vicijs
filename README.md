@@ -198,11 +198,15 @@ For browser usage, configure CORS on your ViciDial server. See the [ViciDial COR
 
 ## Verified Against Documentation
 
-Every parameter in this SDK has been cross-referenced against the official ViciDial API documentation:
-- [Agent API](https://vicidial.org/docs/AGENT_API.txt) (51KB, 31 functions)
-- [Non-Agent API](https://vicidial.org/docs/NON-AGENT_API.txt) (168KB, 60 functions)
+Every parameter, enum value, and function name has been cross-referenced against the official ViciDial documentation:
 
-658 typed fields verified across 5 audit passes. Zero mismatches.
+| Document | What We Verified | Result |
+|----------|-----------------|--------|
+| [Agent API](https://vicidial.org/docs/AGENT_API.txt) (51KB) | 31 functions, 136 typed fields | 5 audit passes, 0 mismatches |
+| [Non-Agent API](https://vicidial.org/docs/NON-AGENT_API.txt) (168KB) | 60 functions, 522 typed fields | 5 audit passes, 0 mismatches |
+| [Status Codes](https://vicidial.org/docs/VICIDIAL_statuses.txt) | 86 disposition codes | 86/86 match |
+| [Agent Events](https://vicidial.org/docs/AGENT_EVENTS_PUSH.txt) | 49 push event types | 49/49 match |
+| [Custom Fields](https://vicidial.org/docs/CUSTOM_FIELDS.txt) | 8 field types | 8/8 match |
 
 ## License
 
