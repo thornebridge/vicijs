@@ -107,7 +107,12 @@ class LeadsClient {
 		return this.call("ccc_lead_info", toApiParams(params));
 	}
 
-	/** Get call info by call ID */
+	/**
+	 * Get call info by call ID.
+	 *
+	 * Use `ADMIN_SCHEMAS.callid_info` for basic response,
+	 * or `ADMIN_SCHEMAS.callid_info_detail` when `detail: "YES"`.
+	 */
 	async callidInfo(params: CallidInfoParams): Promise<ViciResponse> {
 		return this.call("callid_info", toApiParams(params));
 	}
@@ -314,7 +319,12 @@ class MonitoringClient {
 class ReportingClient {
 	constructor(private call: CallFn) {}
 
-	/** Search for call recordings */
+	/**
+	 * Search for call recordings.
+	 *
+	 * Use `ADMIN_SCHEMAS.recording_lookup` for basic response,
+	 * or `ADMIN_SCHEMAS.recording_lookup_duration` when `duration: "Y"`.
+	 */
 	async recordingLookup(params: RecordingLookupParams): Promise<ViciResponse> {
 		return this.call("recording_lookup", toApiParams(params));
 	}

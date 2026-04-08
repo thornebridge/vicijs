@@ -25,7 +25,7 @@ export const AGENT_SCHEMAS = {
 	external_add_lead: [
 		"phone",
 		"campaign",
-		"lead_id",
+		"list_id",
 		"new_lead_id",
 		"user",
 	] as const,
@@ -74,6 +74,26 @@ export const AGENT_SCHEMAS = {
 		"session",
 		"status",
 	] as const,
+	recording_status: [
+		"user",
+		"recording_id",
+		"filename",
+		"server",
+		"start_time",
+		"agent_server",
+		"session",
+		"agent_status",
+	] as const,
+	stereo_recording_status: [
+		"user",
+		"recording_id",
+		"filename",
+		"server",
+		"start_time",
+		"agent_server",
+		"session",
+		"agent_status",
+	] as const,
 	audio_playback: ["filename", "stage", "user"] as const,
 	switch_lead: [
 		"user",
@@ -91,7 +111,13 @@ export const AGENT_SCHEMAS = {
 		"lead_id",
 	] as const,
 	send_notification: [] as const,
-	vm_message: ["user", "lead_id"] as const,
+	vm_message: [
+		"user",
+		"lead_id",
+		"audio_file_1",
+		"audio_file_2",
+		"audio_file_3",
+	] as const,
 	refresh_panel: ["user", "timestamp", "refresh_count", "panels"] as const,
 	pause_code: ["user"] as const,
 } as const;
@@ -388,6 +414,78 @@ export const ADMIN_SCHEMAS = {
 	delete_dnc_phone: ["user", "phone_number", "campaign"] as const,
 	add_fpg_phone: ["user", "phone_number", "group"] as const,
 	delete_fpg_phone: ["user", "phone_number", "group"] as const,
+
+	// Monitoring (additional)
+	blind_monitor: ["phone_login", "dial_string", "session_id"] as const,
+	logged_in_agents: [
+		"user",
+		"campaign_id",
+		"session_id",
+		"status",
+		"lead_id",
+		"callerid",
+		"calls_today",
+		"full_name",
+		"user_group",
+		"user_level",
+	] as const,
+	logged_in_agents_detail: [
+		"user",
+		"campaign_id",
+		"session_id",
+		"status",
+		"lead_id",
+		"callerid",
+		"calls_today",
+		"full_name",
+		"user_group",
+		"user_level",
+		"pause_code",
+		"sub_status",
+	] as const,
+
+	// Reporting (additional)
+	call_status_stats: [
+		"campaign_or_ingroup",
+		"total_calls",
+		"human_answered_calls",
+		"hourly_breakdown",
+		"status_breakdown",
+	] as const,
+
+	// CID/Aliases
+	add_group_alias: [
+		"user",
+		"caller_id_number",
+		"group_alias_id",
+		"group_alias_name",
+	] as const,
+	update_cid_group_entry: [
+		"user",
+		"cid_group_id",
+		"areacode",
+		"outbound_cid",
+		"entries_affected",
+	] as const,
+
+	// Campaign URLs/Presets
+	update_alt_url: [
+		"user",
+		"alt_url_id",
+		"url_type",
+		"entry_type",
+		"campaign_id",
+	] as const,
+	update_presets: ["user", "preset_id", "entry_type", "campaign_id"] as const,
+	hopper_bulk_insert: [
+		"inserted_count",
+		"not_inserted_count",
+		"last_lead_id",
+		"user",
+	] as const,
+
+	// System
+	server_refresh: ["user", "server_count"] as const,
 
 	// Logs
 	update_log_entry: [

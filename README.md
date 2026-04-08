@@ -11,14 +11,14 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/@thornebridge/vicijs"><img src="https://img.shields.io/npm/v/@thornebridge/vicijs?color=0000cc&label=npm" alt="npm version"></a>
   <a href="https://github.com/Thornebridge/vicijs/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPL--2.0-blue" alt="License"></a>
-  <img src="https://img.shields.io/badge/tests-108%20passed-brightgreen" alt="Tests">
+  <img src="https://img.shields.io/badge/tests-214%20passed-brightgreen" alt="Tests">
   <img src="https://img.shields.io/badge/dependencies-0-brightgreen" alt="Dependencies">
   <img src="https://img.shields.io/badge/node-%3E%3D18-blue" alt="Node.js">
 </p>
 
 ---
 
-**91 API functions. 658 typed parameters. 108 tests. 0 dependencies.**
+**92 API functions. 80 response schemas. 7 webhook types. 214 tests. 0 dependencies.**
 
 ```bash
 npm install @thornebridge/vicijs
@@ -106,7 +106,7 @@ await admin.dnc.addPhone({ phoneNumber: '5551234567', campaignId: 'SYSTEM_INTERN
 
 ## API Coverage
 
-The Admin client organizes 60 functions into 10 domain sub-clients:
+The Admin client organizes 61 functions into 10 domain sub-clients:
 
 | Domain | Methods | Description |
 |--------|---------|-------------|
@@ -122,6 +122,70 @@ The Admin client organizes 60 functions into 10 domain sub-clients:
 | `admin.system` | 12 | Version, sounds, CID groups, presets |
 
 The Agent client exposes 31 functions for real-time session control — dialing, transfers, parking, recording, notifications, and more.
+
+## Webhooks
+
+Receive and handle ViciDial callback URLs with full type safety. Build callback URLs, parse incoming webhooks, and route events.
+
+### Building Callback URLs
+
+```typescript
+import { buildCallbackUrl, buildEventPushUrl, CallbackVariable } from '@thornebridge/vicijs';
+
+// Build a Dispo Call URL with template placeholders
+const dispoUrl = buildCallbackUrl({
+  baseUrl: 'https://hooks.example.com/vici/dispo',
+  variables: [
+    CallbackVariable.LEAD_ID,
+    CallbackVariable.DISPO,
+    CallbackVariable.PHONE_NUMBER,
+    CallbackVariable.TALK_TIME,
+    CallbackVariable.RECORDING_FILENAME,
+  ],
+  staticParams: { type: 'dispo_callback' },
+});
+// → "https://hooks.example.com/vici/dispo?type=dispo_callback&lead_id=--A--lead_id--B--&dispo=--A--dispo--B--&..."
+
+// Build an Agent Events Push URL
+const eventUrl = buildEventPushUrl('https://hooks.example.com/vici/events', {
+  type: 'agent_event',
+});
+```
+
+### Handling Incoming Webhooks
+
+```typescript
+import { ViciWebhookRouter, AgentEvent } from '@thornebridge/vicijs';
+
+const router = new ViciWebhookRouter();
+
+// Handle by webhook type
+router.on('dispo_callback', (payload) => {
+  console.log(`Lead ${payload.lead_id} dispositioned as ${payload.dispo}`);
+  console.log(`Talk time: ${payload.talk_time}s`);
+});
+
+router.on('start_call', (payload) => {
+  console.log(`Call started for ${payload.phone_number}`);
+});
+
+// Handle specific agent events
+router.onEvent(AgentEvent.CALL_ANSWERED, (payload) => {
+  console.log(`Agent ${payload.user} answered a call`);
+});
+
+router.onEvent(AgentEvent.DISPO_SET, (payload) => {
+  console.log(`Agent ${payload.user} set disposition`);
+});
+
+// Express integration
+app.get('/vici/webhook', (req, res) => {
+  router.handle(req.url);  // auto-detects type from ?type= param
+  res.send('OK');
+});
+```
+
+All 7 webhook types are supported: `agent_event`, `dispo_callback`, `start_call`, `no_agent`, `add_lead`, `dead_call`, `pause_max`. Each has a fully typed payload with 90+ available callback variables.
 
 ## Error Handling
 
@@ -175,7 +239,7 @@ version.data.build;    // '250720-1841'
 
 ## Enums
 
-85+ status codes, 70 agent events, and 30+ parameter enums — all typed.
+86 status codes, 49 agent events, 103 callback variables, and 30+ parameter enums — all typed.
 
 ```typescript
 import { AgentStatus, SystemStatus, AgentEvent } from '@thornebridge/vicijs';
@@ -225,10 +289,11 @@ Every parameter, enum value, and function name has been cross-referenced against
 
 | Document | What We Verified | Result |
 |----------|-----------------|--------|
-| [Agent API](https://vicidial.org/docs/AGENT_API.txt) (51KB) | 31 functions, 136 typed fields | 5 audit passes, 0 mismatches |
-| [Non-Agent API](https://vicidial.org/docs/NON-AGENT_API.txt) (168KB) | 60 functions, 522 typed fields | 5 audit passes, 0 mismatches |
-| [Status Codes](https://vicidial.org/docs/VICIDIAL_statuses.txt) | 86 disposition codes | 86/86 match |
+| [Agent API](https://vicidial.org/docs/AGENT_API.txt) (51KB) | 31 functions, 29 response schemas | Fully verified |
+| [Non-Agent API](https://vicidial.org/docs/NON-AGENT_API.txt) (168KB) | 61 functions, 51 response schemas | Fully verified |
+| [Status Codes](https://vicidial.org/docs/VICIDIAL_statuses.txt) | 86 disposition codes across 12 categories | 86/86 match |
 | [Agent Events](https://vicidial.org/docs/AGENT_EVENTS_PUSH.txt) | 49 push event types | 49/49 match |
+| [Callback URLs](https://vicidial.org/docs/CALLURL_VARIABLES.txt) | 103 template variables, 7 trigger types | 103/103 match |
 | [Custom Fields](https://vicidial.org/docs/CUSTOM_FIELDS.txt) | 8 field types | 8/8 match |
 
 ## License

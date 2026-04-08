@@ -21,8 +21,10 @@ import type {
 	SwitchLeadParams,
 	TransferConferenceParams,
 	UpdateFieldsParams,
+	VersionResponse,
 	VmMessageParams,
 	WebphoneUrlAction,
+	WebserverResponse,
 } from "./types.js";
 
 const AGENT_API_PATH = "/agc/api.php";
@@ -69,13 +71,17 @@ export class ViciAgent extends ViciClient {
 	// ─── System/Info ──────────────────────────────────────────
 
 	/** Get API version, build number, and server date/time */
-	async version(): Promise<ViciResponse> {
-		return this.request(AGENT_API_PATH, { function: "version" });
+	async version(): Promise<ViciResponse<VersionResponse>> {
+		return this.request(AGENT_API_PATH, { function: "version" }) as Promise<
+			ViciResponse<VersionResponse>
+		>;
 	}
 
 	/** Get server configuration, timezone, and system specs */
-	async webserver(): Promise<ViciResponse> {
-		return this.request(AGENT_API_PATH, { function: "webserver" });
+	async webserver(): Promise<ViciResponse<WebserverResponse>> {
+		return this.request(AGENT_API_PATH, { function: "webserver" }) as Promise<
+			ViciResponse<WebserverResponse>
+		>;
 	}
 
 	/** Look up agent by CRM AgentID and associate a TeamID */

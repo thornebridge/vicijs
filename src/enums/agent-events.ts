@@ -1,4 +1,4 @@
-/** All 70 agent push event types */
+/** All 49 agent push event types */
 export const AgentEvent = {
 	// Session events
 	LOGGED_IN: "logged_in",

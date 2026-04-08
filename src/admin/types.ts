@@ -243,6 +243,7 @@ export interface UpdateLeadParams {
 	phoneCode?: string;
 	entryListId?: number;
 	forceEntryListId?: number;
+	multiAltPhones?: string;
 }
 
 export interface BatchUpdateLeadParams {
@@ -506,11 +507,7 @@ export interface AddListParams {
 	webFormAddressThree?: string;
 	/** 4-100 chars, valid 4-digit groups of 24-hour time (e.g. "0900-1700-2359") */
 	resetTime?: string;
-	tzMethod?:
-		| "COUNTRY_AND_AREA_CODE"
-		| "POSTAL_CODE"
-		| "NANPA_PREFIX"
-		| "OWNER_TIME_ZONE_CODE";
+	tzMethod?: TZMethod;
 	/** Valid call time ID or "campaign" (default) */
 	localCallTime?: string;
 	/** YYYY-MM-DD format */
@@ -557,11 +554,7 @@ export interface UpdateListParams {
 	webFormAddressTwo?: string;
 	webFormAddressThree?: string;
 	resetTime?: string;
-	tzMethod?:
-		| "COUNTRY_AND_AREA_CODE"
-		| "POSTAL_CODE"
-		| "NANPA_PREFIX"
-		| "OWNER_TIME_ZONE_CODE";
+	tzMethod?: TZMethod;
 	localCallTime?: string;
 	expirationDate?: string;
 	xferconfOne?: string;
@@ -800,8 +793,8 @@ export interface CheckPhoneNumberParams {
 	usacanPrefixCheck?: "Y" | "N";
 	usacanAreacodeCheck?: "Y" | "N";
 	nanpaAcPrefixCheck?: "Y" | "N";
-	tzMethod?: string;
-	/** 5 digits, USA zipcodes only. Needed for POSTAL tz_method */
+	tzMethod?: TZMethod;
+	/** 5 digits, USA zipcodes only. Needed for POSTAL_CODE tz_method */
 	postalCode?: string;
 	/** 2 letters. Needed if state call time rules enabled */
 	state?: string;

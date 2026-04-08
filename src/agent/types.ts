@@ -20,10 +20,21 @@ import type {
 
 // ─── Version ──────────────────────────────────────────────────
 export interface VersionResponse {
-	version: string;
-	build: string;
-	date: string;
-	epoch: string;
+	version?: string;
+	build?: string;
+	date?: string;
+	epoch?: string;
+}
+
+// ─── Webserver ────────────────────────────────────────────────
+export interface WebserverResponse {
+	timezone?: string;
+	now?: string;
+	activeExt?: string;
+	agentSession?: string;
+	webProtocol?: string;
+	phpVersion?: string;
+	serverGmt?: string;
 }
 
 // ─── External Dial ────────────────────────────────────────────
@@ -71,7 +82,7 @@ export interface UpdateFieldsParams {
 	middleInitial?: string;
 	title?: string;
 	phoneNumber?: string;
-	phoneCode?: number;
+	phoneCode?: string;
 	address1?: string;
 	address2?: string;
 	address3?: string;

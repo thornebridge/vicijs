@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ViciJS - Official TypeScript SDK for ViciDial</title>
-<meta name="description" content="The definitive TypeScript SDK for ViciDial. 91 type-safe API functions, 658 verified parameters, zero dependencies. Full Agent and Admin API coverage with structured errors, response schemas, and complete enum types.">
+<meta name="description" content="The definitive TypeScript SDK for ViciDial. 92 type-safe API functions, 80 response schemas, 7 webhook types, zero dependencies. Full Agent and Admin API coverage with structured errors, response schemas, and complete enum types.">
 <meta name="keywords" content="vicidial, typescript, sdk, api, contact center, dialer, call center, predictive dialer, outbound, inbound, javascript, npm, vicijs, vici, telephony, open source">
 <meta name="author" content="Thornebridge">
 <meta name="robots" content="index, follow">
@@ -16,7 +16,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="ViciJS - Official TypeScript SDK for ViciDial">
-<meta property="og:description" content="Type-safe ViciDial integration. 91 API functions, 658 verified parameters, zero dependencies. The definitive TypeScript library for contact center automation.">
+<meta property="og:description" content="Type-safe ViciDial integration. 92 API functions, 80 response schemas, 7 webhook types, zero dependencies. The definitive TypeScript library for contact center automation.">
 <meta property="og:url" content="https://thornebridge.github.io/vicijs/">
 <meta property="og:site_name" content="ViciJS">
 <meta property="og:image" content="https://thornebridge.github.io/vicijs/og-image.png">
@@ -27,7 +27,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ViciJS - TypeScript SDK for ViciDial">
-<meta name="twitter:description" content="91 type-safe API functions. 658 verified parameters. Zero dependencies. The definitive ViciDial integration library.">
+<meta name="twitter:description" content="92 type-safe API functions. 80 response schemas. 7 webhook types. Zero dependencies. The definitive ViciDial integration library.">
 <meta name="twitter:image" content="https://thornebridge.github.io/vicijs/og-image.png">
 
 <!-- Structured Data -->
@@ -545,6 +545,7 @@ tr:hover { background: #f0f0ff; }
       <a href="#agent" onclick="show('agent')">AGENT API</a>
       <a href="#admin" onclick="show('admin')">ADMIN API</a>
       <a href="#errors" onclick="show('errors')">ERRORS</a>
+      <a href="#webhooks" onclick="show('webhooks')">WEBHOOKS</a>
       <a href="#reference" onclick="show('reference')">REFERENCE</a>
     </div>
     <a href="https://github.com/Thornebridge/vicijs" target="_blank">GITHUB</a>
@@ -567,6 +568,7 @@ tr:hover { background: #f0f0ff; }
       <a href="#agent" onclick="show('agent')" id="nav-agent">AGENT API</a>
       <a href="#admin" onclick="show('admin')" id="nav-admin">ADMIN API</a>
       <a href="#errors" onclick="show('errors')" id="nav-errors">ERRORS</a>
+      <a href="#webhooks" onclick="show('webhooks')" id="nav-webhooks">WEBHOOKS</a>
       <a href="#reference" onclick="show('reference')" id="nav-reference">REFERENCE</a>
     </nav>
   </div>
@@ -587,9 +589,9 @@ tr:hover { background: #f0f0ff; }
   </div>
 
   <div class="stats-bar">
-    <div class="stat"><div class="stat-num">91</div><div class="stat-label">API Functions</div></div>
-    <div class="stat"><div class="stat-num">658</div><div class="stat-label">Typed Params</div></div>
-    <div class="stat"><div class="stat-num">108</div><div class="stat-label">Tests</div></div>
+    <div class="stat"><div class="stat-num">92</div><div class="stat-label">API Functions</div></div>
+    <div class="stat"><div class="stat-num">80</div><div class="stat-label">Response Schemas</div></div>
+    <div class="stat"><div class="stat-num">214</div><div class="stat-label">Tests</div></div>
     <div class="stat"><div class="stat-num">0</div><div class="stat-label">Dependencies</div></div>
   </div>
 
@@ -615,7 +617,7 @@ tr:hover { background: #f0f0ff; }
   <table>
     <tr><th>Document</th><th>What We Verified</th><th>Result</th></tr>
     <tr><td><a href="https://vicidial.org/docs/AGENT_API.txt">Agent API</a> (51KB)</td><td>31 functions, 136 typed fields</td><td>0 mismatches</td></tr>
-    <tr><td><a href="https://vicidial.org/docs/NON-AGENT_API.txt">Non-Agent API</a> (168KB)</td><td>60 functions, 522 typed fields</td><td>0 mismatches</td></tr>
+    <tr><td><a href="https://vicidial.org/docs/NON-AGENT_API.txt">Non-Agent API</a> (168KB)</td><td>61 functions, 51 response schemas</td><td>0 mismatches</td></tr>
     <tr><td><a href="https://vicidial.org/docs/VICIDIAL_statuses.txt">Status Codes</a></td><td>86 disposition codes</td><td>86/86 match</td></tr>
     <tr><td><a href="https://vicidial.org/docs/AGENT_EVENTS_PUSH.txt">Agent Events</a></td><td>49 push event types</td><td>49/49 match</td></tr>
     <tr><td><a href="https://vicidial.org/docs/CUSTOM_FIELDS.txt">Custom Fields</a></td><td>8 field types</td><td>8/8 match</td></tr>
@@ -754,7 +756,7 @@ tr:hover { background: #f0f0ff; }
 <!-- ═══ ADMIN API ═══ -->
 <div class="page" id="page-admin">
   <h1>Admin API Reference</h1>
-  <p>The <code>ViciAdmin</code> class wraps all 60 functions of the ViciDial Non-Agent API at <code>/vicidial/non_agent_api.php</code>, organized into 10 domain sub-clients.</p>
+  <p>The <code>ViciAdmin</code> class wraps all 61 functions of the ViciDial Non-Agent API at <code>/vicidial/non_agent_api.php</code>, organized into 10 domain sub-clients.</p>
 
   <h2>admin.leads &mdash; Lead Management (11 functions)</h2>
   <table>
@@ -865,10 +867,139 @@ tr:hover { background: #f0f0ff; }
   </table>
 </div>
 
+<!-- ═══ WEBHOOKS ═══ -->
+<div class="page" id="page-webhooks">
+  <h1>Webhooks &amp; Callbacks</h1>
+  <p>ViciDial can send HTTP requests to your server when events occur &mdash; calls answered, dispositions set, agents paused, leads created. ViciJS provides typed parsers, URL builders, and an event router for all 7 webhook types.</p>
+
+  <h2>Webhook Types (7)</h2>
+  <table>
+    <tr><th>Type</th><th>Trigger</th><th>Req</th><th>Configured In</th></tr>
+    <tr><td><code>agent_event</code></td><td>Agent screen AJAX push (49 event types)</td><td></td><td>Campaign &rarr; Agent Events Push URL</td></tr>
+    <tr><td><code>dispo_callback</code></td><td>Agent submits a disposition</td><td></td><td>Campaign &rarr; Dispo Call URL</td></tr>
+    <tr><td><code>start_call</code></td><td>Call routes to agent</td><td></td><td>Campaign &rarr; Start Call URL</td></tr>
+    <tr><td><code>no_agent</code></td><td>Drop, timeout, busy &mdash; no agent available</td><td></td><td>Campaign &rarr; No Agent Call URL</td></tr>
+    <tr><td><code>add_lead</code></td><td>Inbound lead created (In-Groups only)</td><td></td><td>In-Group &rarr; Add Lead URL</td></tr>
+    <tr><td><code>dead_call</code></td><td>Customer hangs up mid-call</td><td></td><td>Campaign &rarr; Dead Call Trigger URL</td></tr>
+    <tr><td><code>pause_max</code></td><td>Agent exceeds max pause time</td><td></td><td>Campaign &rarr; Pause Max URL</td></tr>
+  </table>
+
+  <h2>Building Callback URLs</h2>
+  <p>Use <code>buildCallbackUrl()</code> to construct URLs with ViciDial's <code>--A--variable--B--</code> template syntax. Paste the output into your ViciDial campaign settings.</p>
+  <pre><span class="kw">import</span> { <span class="typ">buildCallbackUrl</span>, <span class="typ">CallbackVariable</span> } <span class="kw">from</span> <span class="str">'@thornebridge/vicijs'</span>;
+
+<span class="kw">const</span> url = <span class="fn">buildCallbackUrl</span>({
+  baseUrl: <span class="str">'https://hooks.example.com/vici/dispo'</span>,
+  variables: [
+    CallbackVariable.<span class="typ">LEAD_ID</span>,
+    CallbackVariable.<span class="typ">DISPO</span>,
+    CallbackVariable.<span class="typ">PHONE_NUMBER</span>,
+    CallbackVariable.<span class="typ">TALK_TIME</span>,
+    CallbackVariable.<span class="typ">RECORDING_FILENAME</span>,
+  ],
+  staticParams: { type: <span class="str">'dispo_callback'</span> },
+});
+<span class="cm">// &rarr; "https://hooks.example.com/vici/dispo?type=dispo_callback&amp;lead_id=--A--lead_id--B--&amp;..."</span></pre>
+
+  <p>For Agent Events Push, use the convenience function:</p>
+  <pre><span class="kw">import</span> { <span class="typ">buildEventPushUrl</span> } <span class="kw">from</span> <span class="str">'@thornebridge/vicijs'</span>;
+
+<span class="kw">const</span> eventUrl = <span class="fn">buildEventPushUrl</span>(
+  <span class="str">'https://hooks.example.com/vici/events'</span>,
+  { type: <span class="str">'agent_event'</span> },
+);
+<span class="cm">// Includes: user, event, message, lead_id, counter, epoch, agent_log_id</span></pre>
+
+  <p>For cross-origin requests from the agent screen, wrap with <code>wrapWithGet2Post()</code>:</p>
+  <pre><span class="kw">import</span> { <span class="typ">wrapWithGet2Post</span> } <span class="kw">from</span> <span class="str">'@thornebridge/vicijs'</span>;
+
+<span class="kw">const</span> proxied = <span class="fn">wrapWithGet2Post</span>({
+  externalUrl: eventUrl,
+  type: <span class="str">'event'</span>,
+});
+<span class="cm">// &rarr; "get2post.php?uniqueid=--A--epoch--B--.--A--agent_log_id--B--&amp;type=event&amp;HTTPURLTOPOST=..."</span></pre>
+
+  <h2>Webhook Router</h2>
+  <p>The <code>ViciWebhookRouter</code> parses incoming requests and dispatches to typed handlers.</p>
+  <pre><span class="kw">import</span> { <span class="typ">ViciWebhookRouter</span>, <span class="typ">AgentEvent</span> } <span class="kw">from</span> <span class="str">'@thornebridge/vicijs'</span>;
+
+<span class="kw">const</span> router = <span class="kw">new</span> <span class="typ">ViciWebhookRouter</span>();
+
+<span class="cm">// Handle by webhook type</span>
+router.<span class="fn">on</span>(<span class="str">'dispo_callback'</span>, (payload) =&gt; {
+  console.log(<span class="str">`Lead ${payload.lead_id} dispo: ${payload.dispo}`</span>);
+  console.log(<span class="str">`Talk time: ${payload.talk_time}s`</span>);
+});
+
+router.<span class="fn">on</span>(<span class="str">'start_call'</span>, (payload) =&gt; {
+  console.log(<span class="str">`Call started: ${payload.phone_number}`</span>);
+});
+
+router.<span class="fn">on</span>(<span class="str">'dead_call'</span>, (payload) =&gt; {
+  console.log(<span class="str">`Customer hung up: ${payload.lead_id}`</span>);
+});
+
+<span class="cm">// Handle specific agent events</span>
+router.<span class="fn">onEvent</span>(AgentEvent.<span class="typ">CALL_ANSWERED</span>, (payload) =&gt; {
+  console.log(<span class="str">`Agent ${payload.user} answered a call`</span>);
+});
+
+router.<span class="fn">onEvent</span>(AgentEvent.<span class="typ">DISPO_SET</span>, (payload) =&gt; {
+  console.log(<span class="str">`Agent ${payload.user} set disposition`</span>);
+});
+
+<span class="cm">// Express integration</span>
+app.<span class="fn">get</span>(<span class="str">'/vici/webhook'</span>, (req, res) =&gt; {
+  router.<span class="fn">handle</span>(req.url);  <span class="cm">// auto-detects type from ?type= param</span>
+  res.<span class="fn">send</span>(<span class="str">'OK'</span>);
+});
+
+<span class="cm">// Or use separate routes with explicit types</span>
+app.<span class="fn">get</span>(<span class="str">'/vici/dispo'</span>, (req, res) =&gt; {
+  router.<span class="fn">handleAs</span>(<span class="str">'dispo_callback'</span>, req.url);
+  res.<span class="fn">send</span>(<span class="str">'OK'</span>);
+});</pre>
+
+  <h2>Direct Parsing</h2>
+  <p>Parse webhooks without a router using the individual parsers:</p>
+  <pre><span class="kw">import</span> {
+  <span class="typ">parseDispoCallback</span>,
+  <span class="typ">parseAgentEvent</span>,
+  <span class="typ">parseStartCallback</span>,
+  <span class="typ">parseNoAgentCallback</span>,
+  <span class="typ">parseAddLeadCallback</span>,
+  <span class="typ">parseDeadCallCallback</span>,
+  <span class="typ">parsePauseMaxCallback</span>,
+} <span class="kw">from</span> <span class="str">'@thornebridge/vicijs'</span>;
+
+<span class="cm">// Parse from URL, query string, or URLSearchParams</span>
+<span class="kw">const</span> payload = <span class="fn">parseDispoCallback</span>(req.url);
+console.log(payload.dispo);            <span class="cm">// 'SALE'</span>
+console.log(payload.phone_number);     <span class="cm">// '5551234567'</span>
+console.log(payload.recording_filename); <span class="cm">// '20250115-103000_1001'</span></pre>
+
+  <h2>Callback Variables (103)</h2>
+  <p>All 103 ViciDial callback URL template variables are available via the <code>CallbackVariable</code> enum, organized by category:</p>
+  <table>
+    <tr><th>Category</th><th>Variables</th><th>Req</th><th>Count</th></tr>
+    <tr><td>Lead Data</td><td>lead_id, vendor_lead_code, phone_number, first_name, last_name, email, + 21 more</td><td></td><td>27</td></tr>
+    <tr><td>Call/Session</td><td>campaign, uniqueid, call_id, epoch, session_id, server_ip, + 14 more</td><td></td><td>20</td></tr>
+    <tr><td>User</td><td>user, fullname, user_group, agent_email, user_custom_one&ndash;five</td><td></td><td>9</td></tr>
+    <tr><td>Disposition</td><td>dispo, talk_time, call_notes, callback_lead_status, callback_datetime, term_reason, status</td><td></td><td>7</td></tr>
+    <tr><td>Recording</td><td>recording_filename, recording_id</td><td></td><td>2</td></tr>
+    <tr><td>Scripts/Presets</td><td>camp_script, in_script, script_width/height, preset_number_a&ndash;f, preset_dtmf_a&ndash;b</td><td></td><td>12</td></tr>
+    <tr><td>DID Fields</td><td>did_id, did_pattern, did_description, did_custom_one&ndash;five, did_carrier_description</td><td></td><td>10</td></tr>
+    <tr><td>In-Group Custom</td><td>ig_custom_one&ndash;five</td><td></td><td>5</td></tr>
+    <tr><td>Campaign Custom</td><td>camp_custom_one&ndash;five</td><td></td><td>5</td></tr>
+    <tr><td>List Metadata</td><td>list_description, list_name</td><td></td><td>2</td></tr>
+    <tr><td>Agent Event Push</td><td>event, message, counter</td><td></td><td>3</td></tr>
+  </table>
+</div>
+
 <!-- ═══ REFERENCE ═══ -->
 <div class="page" id="page-reference">
   <h1>Full API Reference</h1>
-  <p>Every interface, every parameter, every type. 71 interfaces, 658 fields. Generated from source.</p>
+  <p>Every interface, every parameter, every type. 80 response schemas, 103 callback variables. Generated from source.</p>
 
   <div class="ref-toc">
     <h3>Table of Contents</h3>
@@ -966,15 +1097,28 @@ lead.first_name;     <span class="cm">// 'John'</span>
 lead.phone_number;   <span class="cm">// '5551234567'</span>
 lead.status;          <span class="cm">// 'SALE'</span></pre>
 
+
+
 <h2>Agent API &mdash; ViciAgent</h2>
 <p>Endpoint: <code>/agc/api.php</code> &mdash; All methods require <code>agentUser</code> in config.</p>
 <h3 id="ref-VersionResponse">VersionResponse <code class="fn-tag">VersionResponse</code></h3>
 <table>
 <tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
-<tr><td><code>version</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
-<tr><td><code>build</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
-<tr><td><code>date</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
-<tr><td><code>epoch</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
+<tr><td><code>version</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>build</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>date</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>epoch</code></td><td><code>string</code></td><td></td><td></td></tr>
+</table>
+<h3 id="ref-WebserverResponse">WebserverResponse <code class="fn-tag">WebserverResponse</code></h3>
+<table>
+<tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
+<tr><td><code>timezone</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>now</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>activeExt</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>agentSession</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>webProtocol</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>phpVersion</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>serverGmt</code></td><td><code>string</code></td><td></td><td></td></tr>
 </table>
 <h3 id="ref-external_dial">DialParams <code class="fn-tag">external_dial</code></h3>
 <table>
@@ -1019,7 +1163,7 @@ lead.status;          <span class="cm">// 'SALE'</span></pre>
 <tr><td><code>middleInitial</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>title</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>phoneNumber</code></td><td><code>string</code></td><td></td><td></td></tr>
-<tr><td><code>phoneCode</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>address1</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>address2</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>address3</code></td><td><code>string</code></td><td></td><td></td></tr>
@@ -1295,6 +1439,7 @@ lead.status;          <span class="cm">// 'SALE'</span></pre>
 <tr><td><code>phoneCode</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>entryListId</code></td><td><code>number</code></td><td></td><td></td></tr>
 <tr><td><code>forceEntryListId</code></td><td><code>number</code></td><td></td><td></td></tr>
+<tr><td><code>multiAltPhones</code></td><td><code>string</code></td><td></td><td></td></tr>
 </table>
 <h3 id="ref-batch_update_lead">BatchUpdateLeadParams <code class="fn-tag">batch_update_lead</code></h3>
 <table>
@@ -1441,7 +1586,7 @@ lead.status;          <span class="cm">// 'SALE'</span></pre>
 <tr><td><code>groupId</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>resetPassword</code></td><td><code>number</code></td><td></td><td></td></tr>
 <tr><td><code>inGroups</code></td><td><code>string</code></td><td></td><td></td></tr>
-<tr><td><code>deleteUser</code></td><td><code>&quot;Y&quot;</code></td><td></td><td></td></tr>
+<tr><td><code>deleteUser</code></td><td><code>&quot;Y&quot;</code></td><td></td><td>Undocumented in official API but functional — triggers user deletion</td></tr>
 </table>
 <h3 id="ref-copy_user">CopyUserParams <code class="fn-tag">copy_user</code></h3>
 <table>
@@ -1457,7 +1602,7 @@ lead.status;          <span class="cm">// 'SALE'</span></pre>
 <tr><td><code>agentUser</code></td><td><code>string</code></td><td>Yes</td><td></td></tr>
 <tr><td><code>status</code></td><td><code>RemoteAgentStatus</code></td><td></td><td></td></tr>
 <tr><td><code>campaignId</code></td><td><code>string</code></td><td></td><td></td></tr>
-<tr><td><code>numberOfLines</code></td><td><code>string</code></td><td></td><td></td></tr>
+<tr><td><code>numberOfLines</code></td><td><code>number</code></td><td></td><td></td></tr>
 </table>
 <h3 id="ref-user_details">UserDetailsParams <code class="fn-tag">user_details</code> <span class="extends">extends OutputParams</span></h3>
 <table>
@@ -1549,7 +1694,7 @@ lead.status;          <span class="cm">// 'SALE'</span></pre>
 <tr><th>Parameter</th><th>Type</th><th>Req</th><th>Description</th></tr>
 <tr><td><code>campaigns</code></td><td><code>string</code></td><td></td><td>Dash-delimited campaign IDs (at least one of campaigns/ingroups/didPatterns required)</td></tr>
 <tr><td><code>ingroups</code></td><td><code>string</code></td><td></td><td>Dash-delimited in-group IDs</td></tr>
-<tr><td><code>dids</code></td><td><code>string</code></td><td></td><td>Dash-delimited DID numbers</td></tr>
+<tr><td><code>dids</code></td><td><code>string</code></td><td></td><td>Dash-delimited DID numbers. Note: ViciDial docs also reference this as &quot;did_patterns&quot; in examples.</td></tr>
 <tr><td><code>queryDate</code></td><td><code>string</code></td><td></td><td>YYYY-MM-DD format, defaults to today</td></tr>
 <tr><td><code>endDate</code></td><td><code>string</code></td><td></td><td>YYYY-MM-DD format, defaults to today</td></tr>
 <tr><td><code>statuses</code></td><td><code>string</code></td><td></td><td>Dash-delimited status codes</td></tr>
@@ -1633,7 +1778,7 @@ lead.status;          <span class="cm">// 'SALE'</span></pre>
 <tr><td><code>webFormAddressTwo</code></td><td><code>string</code></td><td></td><td>6-100 chars, URL-encodable</td></tr>
 <tr><td><code>webFormAddressThree</code></td><td><code>string</code></td><td></td><td>6-100 chars, URL-encodable</td></tr>
 <tr><td><code>resetTime</code></td><td><code>string</code></td><td></td><td>4-100 chars, valid 4-digit groups of 24-hour time (e.g. &quot;0900-1700-2359&quot;)</td></tr>
-<tr><td><code>tzMethod</code></td><td><code>"COUNTRY_AND_AREA_CODE", "POSTAL_CODE", "NANPA_PREFIX", "OWNER_TIME_ZONE_CODE"</code></td><td></td><td></td></tr>
+<tr><td><code>tzMethod</code></td><td><code>TZMethod</code></td><td></td><td></td></tr>
 <tr><td><code>localCallTime</code></td><td><code>string</code></td><td></td><td>Valid call time ID or &quot;campaign&quot; (default)</td></tr>
 <tr><td><code>expirationDate</code></td><td><code>string</code></td><td></td><td>YYYY-MM-DD format</td></tr>
 <tr><td><code>xferconfOne</code></td><td><code>string</code></td><td></td><td>Transfer - Conf Number 1 (1-50 characters)</td></tr>
@@ -1665,7 +1810,7 @@ lead.status;          <span class="cm">// 'SALE'</span></pre>
 <tr><td><code>webFormAddressTwo</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>webFormAddressThree</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>resetTime</code></td><td><code>string</code></td><td></td><td></td></tr>
-<tr><td><code>tzMethod</code></td><td><code>"COUNTRY_AND_AREA_CODE", "POSTAL_CODE", "NANPA_PREFIX", "OWNER_TIME_ZONE_CODE"</code></td><td></td><td></td></tr>
+<tr><td><code>tzMethod</code></td><td><code>TZMethod</code></td><td></td><td></td></tr>
 <tr><td><code>localCallTime</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>expirationDate</code></td><td><code>string</code></td><td></td><td></td></tr>
 <tr><td><code>xferconfOne</code></td><td><code>string</code></td><td></td><td></td></tr>
@@ -1858,8 +2003,8 @@ lead.status;          <span class="cm">// 'SALE'</span></pre>
 <tr><td><code>usacanPrefixCheck</code></td><td><code>"Y", "N"</code></td><td></td><td></td></tr>
 <tr><td><code>usacanAreacodeCheck</code></td><td><code>"Y", "N"</code></td><td></td><td></td></tr>
 <tr><td><code>nanpaAcPrefixCheck</code></td><td><code>"Y", "N"</code></td><td></td><td></td></tr>
-<tr><td><code>tzMethod</code></td><td><code>string</code></td><td></td><td></td></tr>
-<tr><td><code>postalCode</code></td><td><code>string</code></td><td></td><td>5 digits, USA zipcodes only. Needed for POSTAL tz_method</td></tr>
+<tr><td><code>tzMethod</code></td><td><code>TZMethod</code></td><td></td><td></td></tr>
+<tr><td><code>postalCode</code></td><td><code>string</code></td><td></td><td>5 digits, USA zipcodes only. Needed for POSTAL_CODE tz_method</td></tr>
 <tr><td><code>state</code></td><td><code>string</code></td><td></td><td>2 letters. Needed if state call time rules enabled</td></tr>
 <tr><td><code>owner</code></td><td><code>string</code></td><td></td><td>2-5 letters. Needed for TZCODE tz_method</td></tr>
 </table>

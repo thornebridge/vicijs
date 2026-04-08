@@ -134,7 +134,12 @@ export type CallbackSearchLocation = "CURRENT" | "ARCHIVE" | "ALL";
 export type DNCCheck = "Y" | "N" | "AREACODE";
 
 /** Timezone lookup method */
-export type TZMethod = "" | "POSTAL" | "TZCODE" | "NANPA";
+export type TZMethod =
+	| ""
+	| "COUNTRY_AND_AREA_CODE"
+	| "POSTAL_CODE"
+	| "NANPA_PREFIX"
+	| "OWNER_TIME_ZONE_CODE";
 
 /** Webphone type */
 export type WebphoneType = "Y" | "N" | "Y_API_LAUNCH";

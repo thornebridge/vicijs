@@ -204,7 +204,7 @@ html += '<h2>Agent API &mdash; ViciAgent</h2>\n';
 html += '<p>Endpoint: <code>/agc/api.php</code> &mdash; All methods require <code>agentUser</code> in config.</p>\n';
 for (const iface of agentIfaces) {
 	const fn = agentFnMap[iface.name];
-	if (fn || iface.name === "VersionResponse" || iface.name === "WebphoneUrlResponse") {
+	if (fn || iface.name === "VersionResponse" || iface.name === "WebserverResponse" || iface.name === "WebphoneUrlResponse") {
 		html += generateTable(iface, fn || iface.name);
 	}
 }

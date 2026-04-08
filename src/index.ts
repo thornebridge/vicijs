@@ -38,6 +38,7 @@ export type {
 	ListCustomFieldsParams,
 	ListInfoParams,
 	LoggedInAgentsParams,
+	OutputParams,
 	PhoneNumberLogParams,
 	RecordingLookupParams,
 	UpdateAltUrlParams,
@@ -74,7 +75,9 @@ export type {
 	SwitchLeadParams,
 	TransferConferenceParams,
 	UpdateFieldsParams,
+	VersionResponse,
 	VmMessageParams,
+	WebserverResponse,
 } from "./agent/types.js";
 export { ViciClient } from "./client.js";
 // Enums
@@ -108,3 +111,5 @@ export type {
 	ViciResponse,
 } from "./types.js";
 export { blank, toApiParams } from "./types.js";
+// Webhooks — real-time callback/webhook integration
+export * from "./webhooks/index.js";

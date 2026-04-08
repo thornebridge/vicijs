@@ -36,6 +36,52 @@ describe("AGENT_SCHEMAS", () => {
 		expect(data).toEqual({ count: "5" });
 	});
 
+	it("parses external_add_lead response with correct list_id field", () => {
+		const data = mapFields(
+			"7275551212|TESTCAMP|101|123456|6666",
+			AGENT_SCHEMAS.external_add_lead,
+		);
+		expect(data.phone).toBe("7275551212");
+		expect(data.campaign).toBe("TESTCAMP");
+		expect(data.list_id).toBe("101");
+		expect(data.new_lead_id).toBe("123456");
+		expect(data.user).toBe("6666");
+	});
+
+	it("parses vm_message response with audio files", () => {
+		const data = mapFields(
+			"6666|12345|EXship01|EXship02|EXship03",
+			AGENT_SCHEMAS.vm_message,
+		);
+		expect(data.user).toBe("6666");
+		expect(data.lead_id).toBe("12345");
+		expect(data.audio_file_1).toBe("EXship01");
+		expect(data.audio_file_2).toBe("EXship02");
+		expect(data.audio_file_3).toBe("EXship03");
+	});
+
+	it("parses recording_status response", () => {
+		const data = mapFields(
+			"6666|121242|20120810-012008__6666_|192.168.1.5|2012-08-10 01:20:10|192.168.1.5|8600051|PAUSED",
+			AGENT_SCHEMAS.recording_status,
+		);
+		expect(data.user).toBe("6666");
+		expect(data.recording_id).toBe("121242");
+		expect(data.filename).toBe("20120810-012008__6666_");
+		expect(data.server).toBe("192.168.1.5");
+		expect(data.agent_status).toBe("PAUSED");
+	});
+
+	it("parses stereo_recording_status response", () => {
+		const data = mapFields(
+			"6666|121242|20120810-012008__6666_|192.168.1.5|2012-08-10 01:20:10|192.168.1.5|8600051|PAUSED",
+			AGENT_SCHEMAS.stereo_recording_status,
+		);
+		expect(data.user).toBe("6666");
+		expect(data.recording_id).toBe("121242");
+		expect(data.agent_status).toBe("PAUSED");
+	});
+
 	it("parses transfer_conference response (skips empty keys)", () => {
 		const data = mapFields(
 			"LOCAL_CLOSER|SALESLINE||NO|agent1|callid",
@@ -122,5 +168,110 @@ describe("ADMIN_SCHEMAS", () => {
 		expect(ADMIN_SCHEMAS.hopper_list).toBeDefined();
 		expect(ADMIN_SCHEMAS.recording_lookup).toBeDefined();
 		expect(ADMIN_SCHEMAS.user_details).toBeDefined();
+	});
+
+	it("parses blind_monitor response", () => {
+		const data = mapFields(
+			"350a|010*010*010*017*350|8600051",
+			ADMIN_SCHEMAS.blind_monitor,
+		);
+		expect(data).toEqual({
+			phone_login: "350a",
+			dial_string: "010*010*010*017*350",
+			session_id: "8600051",
+		});
+	});
+
+	it("parses logged_in_agents response", () => {
+		const data = mapFields(
+			"6666|TESTCAMP|8600051|PAUSED|1079409||1|Admin|ADMIN|9",
+			ADMIN_SCHEMAS.logged_in_agents,
+		);
+		expect(data.user).toBe("6666");
+		expect(data.campaign_id).toBe("TESTCAMP");
+		expect(data.session_id).toBe("8600051");
+		expect(data.status).toBe("PAUSED");
+		expect(data.full_name).toBe("Admin");
+		expect(data.user_level).toBe("9");
+	});
+
+	it("parses logged_in_agents_detail response (with sub_status)", () => {
+		const data = mapFields(
+			"6666|TESTCAMP|8600051|INCALL|1079409|M2260919190001079409|1|Admin|ADMIN|9|LOGIN|DEAD",
+			ADMIN_SCHEMAS.logged_in_agents_detail,
+		);
+		expect(data.user).toBe("6666");
+		expect(data.pause_code).toBe("LOGIN");
+		expect(data.sub_status).toBe("DEAD");
+	});
+
+	it("parses add_group_alias response", () => {
+		const data = mapFields(
+			"6666|7275551212|test_group_alias|test group alias",
+			ADMIN_SCHEMAS.add_group_alias,
+		);
+		expect(data).toEqual({
+			user: "6666",
+			caller_id_number: "7275551212",
+			group_alias_id: "test_group_alias",
+			group_alias_name: "test group alias",
+		});
+	});
+
+	it("parses update_cid_group_entry response", () => {
+		const data = mapFields(
+			"6666|1101|813|8135551212|1",
+			ADMIN_SCHEMAS.update_cid_group_entry,
+		);
+		expect(data).toEqual({
+			user: "6666",
+			cid_group_id: "1101",
+			areacode: "813",
+			outbound_cid: "8135551212",
+			entries_affected: "1",
+		});
+	});
+
+	it("parses update_alt_url response", () => {
+		const data = mapFields(
+			"6666|1|dispo|campaign|TESTCAMP",
+			ADMIN_SCHEMAS.update_alt_url,
+		);
+		expect(data).toEqual({
+			user: "6666",
+			alt_url_id: "1",
+			url_type: "dispo",
+			entry_type: "campaign",
+			campaign_id: "TESTCAMP",
+		});
+	});
+
+	it("parses hopper_bulk_insert response", () => {
+		const data = mapFields(
+			"2|0|8432948|6666",
+			ADMIN_SCHEMAS.hopper_bulk_insert,
+		);
+		expect(data).toEqual({
+			inserted_count: "2",
+			not_inserted_count: "0",
+			last_lead_id: "8432948",
+			user: "6666",
+		});
+	});
+
+	it("parses server_refresh response", () => {
+		const data = mapFields("6666|1", ADMIN_SCHEMAS.server_refresh);
+		expect(data).toEqual({ user: "6666", server_count: "1" });
+	});
+
+	it("parses call_status_stats response", () => {
+		const data = mapFields(
+			"TESTCAMP|26|26|00-0,01-1,02-1|NP-4,TD-22",
+			ADMIN_SCHEMAS.call_status_stats,
+		);
+		expect(data.campaign_or_ingroup).toBe("TESTCAMP");
+		expect(data.total_calls).toBe("26");
+		expect(data.human_answered_calls).toBe("26");
+		expect(data.status_breakdown).toBe("NP-4,TD-22");
 	});
 });

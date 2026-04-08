@@ -1,6 +1,6 @@
 {
   "name": "@thornebridge/vicijs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Official TypeScript SDK for ViciDial — type-safe API client with full feature parity",
   "type": "module",
   "main": "./dist/index.cjs",

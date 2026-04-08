@@ -51,6 +51,7 @@ export interface LeadData {
 	rank?: number;
 	owner?: string;
 	gmtOffsetNow?: string;
+	calledSinceLastReset?: string;
 }
 
 /** Scheduled callback data */
