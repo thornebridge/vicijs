@@ -1980,6 +1980,17 @@ function show(page) {
 // Handle hash navigation
 function handleHash() {
   const hash = location.hash.replace('#', '') || 'home';
+
+  // Anchor links within reference page (e.g. #ref-external_dial)
+  if (hash.startsWith('ref-')) {
+    show('reference');
+    requestAnimationFrame(() => {
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    return;
+  }
+
   show(hash);
 }
 window.addEventListener('hashchange', handleHash);
