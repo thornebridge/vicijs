@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- ViciJS logo — inspired by ViciDial's chevron/diamond motif -->
+  <!-- Two overlapping chevrons forming a "V" + a "JS" accent -->
+
+  <!-- Back chevron (lighter) -->
+  <polygon points="8,12 24,32 8,52 16,52 32,32 16,12" fill="#8888cc" opacity="0.7"/>
+
+  <!-- Front chevron (darker) -->
+  <polygon points="18,12 34,32 18,52 26,52 42,32 26,12" fill="#4444aa"/>
+
+  <!-- Main chevron (blue) -->
+  <polygon points="28,12 44,32 28,52 36,52 52,32 36,12" fill="#0000cc"/>
+
+  <!-- JS dot accent -->
+  <circle cx="54" cy="48" r="5" fill="#0000cc"/>
+</svg>
