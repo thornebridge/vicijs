@@ -1,6 +1,22 @@
-# ViciJS
+<p align="center">
+  <a href="https://thornebridge.github.io/vicijs/">
+    <img src="docs/logo.svg" alt="ViciJS" width="360" />
+  </a>
+</p>
 
-The definitive TypeScript SDK for [ViciDial](https://vicidial.org). Type-safe, zero-dependency, isomorphic.
+<p align="center">
+  The definitive TypeScript SDK for <a href="https://vicidial.org">ViciDial</a>. Type-safe, zero-dependency, isomorphic.
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@thornebridge/vicijs"><img src="https://img.shields.io/npm/v/@thornebridge/vicijs?color=0000cc&label=npm" alt="npm version"></a>
+  <a href="https://github.com/Thornebridge/vicijs/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-AGPL--2.0-blue" alt="License"></a>
+  <img src="https://img.shields.io/badge/tests-108%20passed-brightgreen" alt="Tests">
+  <img src="https://img.shields.io/badge/dependencies-0-brightgreen" alt="Dependencies">
+  <img src="https://img.shields.io/badge/node-%3E%3D18-blue" alt="Node.js">
+</p>
+
+---
 
 **91 API functions. 658 typed parameters. 108 tests. 0 dependencies.**
 
@@ -88,7 +104,7 @@ const stats = await admin.reporting.agentStatsExport({
 await admin.dnc.addPhone({ phoneNumber: '5551234567', campaignId: 'SYSTEM_INTERNAL' });
 ```
 
-## API Domains
+## API Coverage
 
 The Admin client organizes 60 functions into 10 domain sub-clients:
 
@@ -104,6 +120,8 @@ The Admin client organizes 60 functions into 10 domain sub-clients:
 | `admin.monitoring` | 6 | Real-time agent/group status, blind monitor |
 | `admin.reporting` | 6 | Recordings, stats, call logs |
 | `admin.system` | 12 | Version, sounds, CID groups, presets |
+
+The Agent client exposes 31 functions for real-time session control — dialing, transfers, parking, recording, notifications, and more.
 
 ## Error Handling
 
@@ -126,8 +144,8 @@ try {
   if (err instanceof ViciTimeoutError) {
     console.log(`Timed out after ${err.timeoutMs}ms`);
   } else if (err instanceof ViciValidationError) {
-    console.log('Validation failed:', err.details);  // pipe-delimited details
-    console.log('Raw response:', err.raw);            // full ViciDial response
+    console.log('Validation failed:', err.details);
+    console.log('Raw response:', err.raw);
   } else if (err instanceof ViciAuthError) {
     console.log('Check your credentials');
   }
@@ -185,16 +203,21 @@ interface ViciConfig {
   fetch?: typeof fetch;  // Custom fetch for testing/proxying
 }
 
-
 // Agent client extends with:
 interface AgentConfig extends ViciConfig {
   agentUser: string;     // Agent session to control
 }
 ```
 
-## Browser Usage (CORS)
+## Browser Usage
 
 For browser usage, configure CORS on your ViciDial server. See the [ViciDial CORS docs](https://vicidial.org/docs/CORS_SUPPORT.txt). Never set `$CORS_allowed_origin` to `'*'`.
+
+## Documentation
+
+Full API reference with every parameter, type, and enum value documented:
+
+**[thornebridge.github.io/vicijs](https://thornebridge.github.io/vicijs/)**
 
 ## Verified Against Documentation
 
@@ -210,4 +233,8 @@ Every parameter, enum value, and function name has been cross-referenced against
 
 ## License
 
-AGPL-2.0 (matching ViciDial's license)
+[AGPL-2.0](LICENSE) (matching ViciDial's license)
+
+---
+
+<p align="center">Built by <a href="https://github.com/Thornebridge">Thornebridge</a></p>
