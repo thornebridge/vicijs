@@ -137,13 +137,30 @@ body {
 
 .logo {
   display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-title {
+  display: flex;
   align-items: baseline;
-  gap: 4px;
+  line-height: 1;
 }
 
 .logo-vici {
   font-family: var(--font-heading);
-  font-size: 32px;
+  font-size: 34px;
   font-weight: bold;
   color: var(--vici-blue);
   letter-spacing: -1px;
@@ -151,7 +168,7 @@ body {
 
 .logo-js {
   font-family: var(--font-heading);
-  font-size: 32px;
+  font-size: 34px;
   font-weight: bold;
   color: var(--vici-navy);
 }
@@ -159,9 +176,8 @@ body {
 .logo-sub {
   font-size: 10px;
   color: #666;
-  display: block;
-  margin-top: -4px;
   font-style: italic;
+  margin-top: 2px;
 }
 
 .header-nav a {
@@ -455,6 +471,62 @@ tr:hover { background: #f0f0ff; }
   color: #555;
   font-size: 11px;
 }
+
+/* ─── REFERENCE TOC ──────────────────────────────────────── */
+.ref-toc {
+  background: linear-gradient(180deg, #f8f8ff 0%, #eeeefc 100%);
+  border: 1px solid #ccd;
+  padding: 16px 20px;
+  margin: 16px 0 28px;
+  columns: 2;
+  column-gap: 24px;
+}
+
+.ref-toc h3 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--vici-navy);
+  margin: 0 0 8px;
+  border: none;
+  column-span: all;
+}
+
+.ref-toc a {
+  display: block;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  padding: 2px 0;
+  text-decoration: none;
+  color: var(--vici-blue);
+  break-inside: avoid;
+}
+
+.ref-toc a:hover {
+  background: #e8e8ff;
+}
+
+.ref-toc-section {
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--vici-navy);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 10px 0 4px;
+  padding-top: 6px;
+  border-top: 1px solid #dde;
+  break-inside: avoid;
+}
+
+.ref-toc-section:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+@media (max-width: 768px) {
+  .ref-toc { columns: 1; }
+}
 </style>
 </head>
 <body>
@@ -478,9 +550,9 @@ tr:hover { background: #f0f0ff; }
 <div class="header">
   <div class="header-inner">
     <div class="logo">
-      <img src="favicon.svg" alt="ViciJS" width="36" height="36" style="margin-right:10px;">
-      <div>
-        <span class="logo-vici">VICI</span><span class="logo-js">js</span>
+      <img src="favicon.svg" alt="ViciJS" class="logo-icon">
+      <div class="logo-text">
+        <div class="logo-title"><span class="logo-vici">VICI</span><span class="logo-js">js</span></div>
         <span class="logo-sub">Official TypeScript SDK for ViciDial</span>
       </div>
     </div>
@@ -791,7 +863,92 @@ tr:hover { background: #f0f0ff; }
 <!-- ═══ REFERENCE ═══ -->
 <div class="page" id="page-reference">
   <h1>Full API Reference</h1>
-  <p>Every interface, every parameter, every type. Generated from source.</p>
+  <p>Every interface, every parameter, every type. 71 interfaces, 658 fields. Generated from source.</p>
+
+  <div class="ref-toc">
+    <h3>Table of Contents</h3>
+    <div class="ref-toc-section">Agent API</div>
+    <a href="#ref-external_dial">DialParams &mdash; external_dial</a>
+    <a href="#ref-external_status">ExternalStatusParams &mdash; external_status</a>
+    <a href="#ref-change_ingroups">ChangeIngroupsParams &mdash; change_ingroups</a>
+    <a href="#ref-update_fields">UpdateFieldsParams &mdash; update_fields</a>
+    <a href="#ref-set_timer_action">SetTimerActionParams &mdash; set_timer_action</a>
+    <a href="#ref-ra_call_control">RaCallControlParams &mdash; ra_call_control</a>
+    <a href="#ref-transfer_conference">TransferConferenceParams &mdash; transfer_conference</a>
+    <a href="#ref-recording">RecordingParams &mdash; recording</a>
+    <a href="#ref-stereo_recording">StereoRecordingParams &mdash; stereo_recording</a>
+    <a href="#ref-audio_playback">AudioPlaybackParams &mdash; audio_playback</a>
+    <a href="#ref-switch_lead">SwitchLeadParams &mdash; switch_lead</a>
+    <a href="#ref-force_fronter_leave_3way">ForceFronterParams &mdash; force_fronter_leave_3way</a>
+    <a href="#ref-send_notification">SendNotificationParams &mdash; send_notification</a>
+    <a href="#ref-vm_message">VmMessageParams &mdash; vm_message</a>
+    <a href="#ref-refresh_panel">RefreshPanelParams &mdash; refresh_panel</a>
+    <a href="#ref-external_add_lead">ExternalAddLeadParams &mdash; external_add_lead</a>
+    <a href="#ref-st_login_log">StLoginLogParams &mdash; st_login_log</a>
+
+    <div class="ref-toc-section">Admin &mdash; Leads</div>
+    <a href="#ref-add_lead">AddLeadParams &mdash; add_lead</a>
+    <a href="#ref-update_lead">UpdateLeadParams &mdash; update_lead</a>
+    <a href="#ref-batch_update_lead">BatchUpdateLeadParams &mdash; batch_update_lead</a>
+    <a href="#ref-lead_field_info">LeadFieldInfoParams &mdash; lead_field_info</a>
+    <a href="#ref-lead_all_info">LeadAllInfoParams &mdash; lead_all_info</a>
+    <a href="#ref-lead_callback_info">LeadCallbackInfoParams &mdash; lead_callback_info</a>
+    <a href="#ref-lead_search">LeadSearchParams &mdash; lead_search</a>
+    <a href="#ref-lead_status_search">LeadStatusSearchParams &mdash; lead_status_search</a>
+    <a href="#ref-ccc_lead_info">CccLeadInfoParams &mdash; ccc_lead_info</a>
+    <a href="#ref-callid_info">CallidInfoParams &mdash; callid_info</a>
+
+    <div class="ref-toc-section">Admin &mdash; Users</div>
+    <a href="#ref-add_user">AddUserParams &mdash; add_user</a>
+    <a href="#ref-update_user">UpdateUserParams &mdash; update_user</a>
+    <a href="#ref-copy_user">CopyUserParams &mdash; copy_user</a>
+    <a href="#ref-update_remote_agent">UpdateRemoteAgentParams &mdash; update_remote_agent</a>
+    <a href="#ref-user_details">UserDetailsParams &mdash; user_details</a>
+    <a href="#ref-agent_campaigns">AgentCampaignsParams &mdash; agent_campaigns</a>
+
+    <div class="ref-toc-section">Admin &mdash; Monitoring</div>
+    <a href="#ref-blind_monitor">BlindMonitorParams &mdash; blind_monitor</a>
+    <a href="#ref-agent_ingroup_info">AgentIngroupInfoParams &mdash; agent_ingroup_info</a>
+    <a href="#ref-agent_status">AgentStatusParams &mdash; agent_status</a>
+    <a href="#ref-user_group_status">UserGroupStatusParams &mdash; user_group_status</a>
+    <a href="#ref-in_group_status">InGroupStatusParams &mdash; in_group_status</a>
+    <a href="#ref-logged_in_agents">LoggedInAgentsParams &mdash; logged_in_agents</a>
+
+    <div class="ref-toc-section">Admin &mdash; Reporting</div>
+    <a href="#ref-recording_lookup">RecordingLookupParams &mdash; recording_lookup</a>
+    <a href="#ref-did_log_export">DidLogExportParams &mdash; did_log_export</a>
+    <a href="#ref-agent_stats_export">AgentStatsExportParams &mdash; agent_stats_export</a>
+    <a href="#ref-call_status_stats">CallStatusStatsParams &mdash; call_status_stats</a>
+    <a href="#ref-call_dispo_report">CallDispoReportParams &mdash; call_dispo_report</a>
+    <a href="#ref-phone_number_log">PhoneNumberLogParams &mdash; phone_number_log</a>
+
+    <div class="ref-toc-section">Admin &mdash; Campaigns, Lists, Phones</div>
+    <a href="#ref-update_campaign">UpdateCampaignParams &mdash; update_campaign</a>
+    <a href="#ref-campaigns_list">CampaignsListParams &mdash; campaigns_list</a>
+    <a href="#ref-hopper_list">HopperListParams &mdash; hopper_list</a>
+    <a href="#ref-hopper_bulk_insert">HopperBulkInsertParams &mdash; hopper_bulk_insert</a>
+    <a href="#ref-add_list">AddListParams &mdash; add_list</a>
+    <a href="#ref-update_list">UpdateListParams &mdash; update_list</a>
+    <a href="#ref-list_info">ListInfoParams &mdash; list_info</a>
+    <a href="#ref-list_custom_fields">ListCustomFieldsParams &mdash; list_custom_fields</a>
+    <a href="#ref-add_phone">AddPhoneParams &mdash; add_phone</a>
+    <a href="#ref-update_phone">UpdatePhoneParams &mdash; update_phone</a>
+    <a href="#ref-add_phone_alias">AddPhoneAliasParams &mdash; add_phone_alias</a>
+    <a href="#ref-update_phone_alias">UpdatePhoneAliasParams &mdash; update_phone_alias</a>
+
+    <div class="ref-toc-section">Admin &mdash; DIDs, DNC, System</div>
+    <a href="#ref-add_did">AddDidParams &mdash; add_did</a>
+    <a href="#ref-copy_did">CopyDidParams &mdash; copy_did</a>
+    <a href="#ref-update_did">UpdateDidParams &mdash; update_did</a>
+    <a href="#ref-add_dnc_phone">DncPhoneParams &mdash; add_dnc_phone</a>
+    <a href="#ref-add_fpg_phone">FpgPhoneParams &mdash; add_fpg_phone</a>
+    <a href="#ref-check_phone_number">CheckPhoneNumberParams &mdash; check_phone_number</a>
+    <a href="#ref-add_group_alias">AddGroupAliasParams &mdash; add_group_alias</a>
+    <a href="#ref-update_cid_group_entry">UpdateCidGroupEntryParams &mdash; update_cid_group_entry</a>
+    <a href="#ref-update_alt_url">UpdateAltUrlParams &mdash; update_alt_url</a>
+    <a href="#ref-update_presets">UpdatePresetsParams &mdash; update_presets</a>
+    <a href="#ref-update_log_entry">UpdateLogEntryParams &mdash; update_log_entry</a>
+  </div>
 
   <h2>Response Parsing</h2>
   <p>ViciDial returns pipe-delimited text. Use built-in schemas to map fields:</p>
