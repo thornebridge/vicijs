@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ViciJS - Official TypeScript SDK for ViciDial</title>
+<meta name="description" content="Type-safe TypeScript SDK for ViciDial. 91 API functions, 658 typed parameters, zero dependencies.">
+<style>
+/* ============================================================
+   ViciDial-inspired theme — mid-2000s blue gradient aesthetic
+   modernized into a fast SPA shell
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --vici-blue: #0000cc;
+  --vici-blue-dark: #000088;
+  --vici-blue-light: #3333ff;
+  --vici-navy: #000044;
+  --vici-gray: #e8e8e8;
+  --vici-border: #999;
+  --vici-link: #0000cc;
+  --vici-bg: #d0d0d0;
+  --vici-content-bg: #ffffff;
+  --vici-text: #222;
+  --vici-code-bg: #1a1a2e;
+  --vici-code-text: #e0e0e0;
+  --font-body: Verdana, Geneva, Tahoma, sans-serif;
+  --font-heading: "Trebuchet MS", Arial, sans-serif;
+  --font-mono: "Courier New", Courier, monospace;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--vici-text);
+  background: var(--vici-bg);
+}
+
+/* ─── TOP BAR ─────────────────────────────────────────────── */
+.topbar {
+  background: linear-gradient(180deg, #4444aa 0%, var(--vici-navy) 100%);
+  padding: 6px 0;
+  border-bottom: 2px solid var(--vici-blue-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.topbar a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 12px;
+}
+
+.topbar a:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+/* ─── HEADER ──────────────────────────────────────────────── */
+.header {
+  background: var(--vici-content-bg);
+  border-bottom: 1px solid var(--vici-border);
+  padding: 20px 0;
+}
+
+.header-inner {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.logo-vici {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--vici-blue);
+  letter-spacing: -1px;
+}
+
+.logo-js {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--vici-navy);
+}
+
+.logo-sub {
+  font-size: 10px;
+  color: #666;
+  display: block;
+  margin-top: -4px;
+  font-style: italic;
+}
+
+.header-nav a {
+  color: var(--vici-text);
+  text-decoration: none;
+  font-size: 12px;
+  padding: 6px 14px;
+  font-weight: bold;
+  border-bottom: 3px solid transparent;
+}
+
+.header-nav a:hover,
+.header-nav a.active {
+  border-bottom-color: var(--vici-blue);
+  background: #f0f0ff;
+}
+
+/* ─── CONTENT AREA ────────────────────────────────────────── */
+.content-wrap {
+  max-width: 1024px;
+  margin: 0 auto;
+  background: var(--vici-content-bg);
+  min-height: 80vh;
+  border-left: 1px solid var(--vici-border);
+  border-right: 1px solid var(--vici-border);
+}
+
+.page {
+  display: none;
+  padding: 30px 40px 60px;
+}
+
+.page.active { display: block; }
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  color: var(--vici-navy);
+  border-bottom: 2px solid var(--vici-blue);
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  color: var(--vici-blue);
+  margin: 28px 0 12px;
+  font-weight: bold;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  color: var(--vici-blue-dark);
+  margin: 18px 0 8px;
+  font-weight: bold;
+}
+
+p { margin: 0 0 12px; }
+
+a { color: var(--vici-link); }
+a:hover { color: var(--vici-blue-light); }
+
+/* ─── CODE BLOCKS ─────────────────────────────────────────── */
+pre {
+  background: var(--vici-code-bg);
+  color: var(--vici-code-text);
+  padding: 16px 20px;
+  border-radius: 0;
+  border: 1px solid #444;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 12px 0 16px;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+p code, li code, td code {
+  background: #eef;
+  padding: 1px 5px;
+  border: 1px solid #ccd;
+  color: var(--vici-blue-dark);
+}
+
+/* ─── TABLES ──────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 20px;
+  font-size: 12px;
+}
+
+th {
+  background: linear-gradient(180deg, #e8e8f8 0%, #d0d0e8 100%);
+  border: 1px solid var(--vici-border);
+  padding: 6px 10px;
+  text-align: left;
+  font-weight: bold;
+  color: var(--vici-navy);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+td {
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  vertical-align: top;
+}
+
+tr:nth-child(even) { background: #f8f8fc; }
+tr:hover { background: #f0f0ff; }
+
+/* ─── INSTALL BOX ─────────────────────────────────────────── */
+.install-box {
+  background: linear-gradient(180deg, var(--vici-navy) 0%, #000066 100%);
+  color: #fff;
+  padding: 20px 28px;
+  margin: 20px 0;
+  border: 2px solid var(--vici-blue-light);
+  text-align: center;
+}
+
+.install-box code {
+  background: rgba(255,255,255,0.1);
+  color: #aaf;
+  border: 1px solid #446;
+  padding: 4px 16px;
+  font-size: 16px;
+  display: inline-block;
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+.install-box p {
+  font-size: 11px;
+  color: #99a;
+  margin-bottom: 6px;
+}
+
+/* ─── STATS BAR ───────────────────────────────────────────── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin: 20px 0;
+  border: 1px solid var(--vici-border);
+}
+
+.stat {
+  text-align: center;
+  padding: 14px 8px;
+  border-right: 1px solid var(--vici-border);
+  background: linear-gradient(180deg, #f8f8ff 0%, #e8e8f0 100%);
+}
+
+.stat:last-child { border-right: none; }
+
+.stat-num {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--vici-blue);
+  font-family: var(--font-heading);
+}
+
+.stat-label {
+  font-size: 10px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* ─── FEATURE LIST ────────────────────────────────────────── */
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.feature {
+  border: 1px solid #ccd;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, #fafafe 0%, #f2f2f8 100%);
+}
+
+.feature strong {
+  color: var(--vici-blue);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.feature span {
+  font-size: 11px;
+  color: #555;
+}
+
+/* ─── FOOTER ──────────────────────────────────────────────── */
+.footer {
+  background: linear-gradient(180deg, var(--vici-blue) 0%, var(--vici-navy) 100%);
+  color: #aab;
+  text-align: center;
+  padding: 14px;
+  font-size: 11px;
+  border-top: 2px solid var(--vici-blue-light);
+}
+
+.footer a { color: #aaf; }
+
+/* ─── MOBILE ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .features { grid-template-columns: 1fr; }
+  .header-nav { display: none; }
+  .page { padding: 20px 16px 40px; }
+}
+
+/* ─── SYNTAX HIGHLIGHTING (minimal) ──────────────────────── */
+.kw { color: #c792ea; }
+.str { color: #c3e88d; }
+.fn { color: #82aaff; }
+.cm { color: #666; }
+.typ { color: #ffcb6b; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div>
+      <a href="#home" onclick="show('home')">HOME</a>
+      <a href="#quickstart" onclick="show('quickstart')">QUICKSTART</a>
+      <a href="#agent" onclick="show('agent')">AGENT API</a>
+      <a href="#admin" onclick="show('admin')">ADMIN API</a>
+      <a href="#errors" onclick="show('errors')">ERRORS</a>
+      <a href="#reference" onclick="show('reference')">REFERENCE</a>
+    </div>
+    <a href="https://github.com/Thornebridge/vicijs" target="_blank">GITHUB</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div>
+        <span class="logo-vici">VICI</span><span class="logo-js">js</span>
+        <span class="logo-sub">Official TypeScript SDK for ViciDial</span>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="#home" onclick="show('home')" class="active" id="nav-home">HOME</a>
+      <a href="#quickstart" onclick="show('quickstart')" id="nav-quickstart">QUICKSTART</a>
+      <a href="#agent" onclick="show('agent')" id="nav-agent">AGENT API</a>
+      <a href="#admin" onclick="show('admin')" id="nav-admin">ADMIN API</a>
+      <a href="#errors" onclick="show('errors')" id="nav-errors">ERRORS</a>
+      <a href="#reference" onclick="show('reference')" id="nav-reference">REFERENCE</a>
+    </nav>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+<!-- ═══ HOME PAGE ═══ -->
+<div class="page active" id="page-home">
+  <h1>ViciJS &mdash; TypeScript SDK for ViciDial</h1>
+
+  <p>The definitive integration library for ViciDial. Type-safe, zero-dependency, battle-tested against the official API documentation.</p>
+
+  <div class="install-box">
+    <p>Install via npm</p>
+    <code>npm install vicijs</code>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">91</div><div class="stat-label">API Functions</div></div>
+    <div class="stat"><div class="stat-num">658</div><div class="stat-label">Typed Params</div></div>
+    <div class="stat"><div class="stat-num">108</div><div class="stat-label">Tests</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">Dependencies</div></div>
+  </div>
+
+  <h2>Why ViciJS</h2>
+  <p>ViciDial's API returns pipe-delimited plaintext over HTTP GET with credentials in query strings. Every integration today is raw <code>fetch</code> calls, manual string splitting, and zero type safety. ViciJS fixes all of that.</p>
+
+  <div class="features">
+    <div class="feature"><strong>Full Type Safety</strong><span>Every parameter, response field, and enum value is typed. Your IDE knows what's valid before you hit send.</span></div>
+    <div class="feature"><strong>Structured Errors</strong><span>Catch ViciAuthError, ViciPermissionError, ViciNotFoundError, ViciValidationError, ViciTimeoutError individually.</span></div>
+    <div class="feature"><strong>Response Schemas</strong><span>Built-in field schemas map pipe-delimited output to named properties. No more counting pipes.</span></div>
+    <div class="feature"><strong>Isomorphic</strong><span>Works in Node.js 18+ and browsers. Uses native fetch. ESM + CJS dual build with full .d.ts declarations.</span></div>
+  </div>
+
+  <h2>Two Clients, Full Coverage</h2>
+  <table>
+    <tr><th>Client</th><th>Endpoint</th><th>Functions</th><th>Use Case</th></tr>
+    <tr><td><code>ViciAgent</code></td><td>/agc/api.php</td><td>31</td><td>Agent session control &mdash; dial, pause, transfer, park, record, hangup</td></tr>
+    <tr><td><code>ViciAdmin</code></td><td>/vicidial/non_agent_api.php</td><td>60</td><td>Administration &mdash; leads, users, campaigns, lists, DIDs, DNC, monitoring, reporting</td></tr>
+  </table>
+
+  <h2>Verified Against Documentation</h2>
+  <p>Every parameter has been cross-referenced against the official ViciDial API docs through 5 automated audit passes. 658 typed fields across 90 API functions &mdash; zero mismatches.</p>
+  <p><a href="https://vicidial.org/docs/AGENT_API.txt">Agent API Reference (51KB)</a> &bull; <a href="https://vicidial.org/docs/NON-AGENT_API.txt">Non-Agent API Reference (168KB)</a></p>
+</div>
+
+<!-- ═══ QUICKSTART ═══ -->
+<div class="page" id="page-quickstart">
+  <h1>Quickstart</h1>
+
+  <h2>Installation</h2>
+  <pre>npm install vicijs</pre>
+
+  <h2>Agent API &mdash; Control Agent Sessions</h2>
+  <pre><span class="kw">import</span> { <span class="typ">ViciAgent</span> } <span class="kw">from</span> <span class="str">'vicijs'</span>;
+
+<span class="kw">const</span> agent = <span class="kw">new</span> <span class="fn">ViciAgent</span>({
+  baseUrl: <span class="str">'https://dialer.example.com'</span>,
+  user: <span class="str">'apiuser'</span>,
+  pass: <span class="str">'apipass'</span>,
+  agentUser: <span class="str">'1001'</span>,
+});
+
+<span class="cm">// Dial a number</span>
+<span class="kw">await</span> agent.<span class="fn">dial</span>({ value: <span class="str">'5551234567'</span>, search: <span class="str">'YES'</span> });
+
+<span class="cm">// Pause / resume</span>
+<span class="kw">await</span> agent.<span class="fn">pause</span>(<span class="str">'PAUSE'</span>);
+<span class="kw">await</span> agent.<span class="fn">pause</span>(<span class="str">'RESUME'</span>);
+
+<span class="cm">// Transfer to another group</span>
+<span class="kw">await</span> agent.<span class="fn">transferConference</span>({
+  value: <span class="str">'LOCAL_CLOSER'</span>,
+  ingroupChoices: <span class="str">'SALESLINE'</span>,
+});
+
+<span class="cm">// Hangup and disposition</span>
+<span class="kw">await</span> agent.<span class="fn">hangup</span>();
+<span class="kw">await</span> agent.<span class="fn">setStatus</span>({ value: <span class="str">'SALE'</span> });</pre>
+
+  <h2>Admin API &mdash; Manage Everything Else</h2>
+  <pre><span class="kw">import</span> { <span class="typ">ViciAdmin</span> } <span class="kw">from</span> <span class="str">'vicijs'</span>;
+
+<span class="kw">const</span> admin = <span class="kw">new</span> <span class="fn">ViciAdmin</span>({
+  baseUrl: <span class="str">'https://dialer.example.com'</span>,
+  user: <span class="str">'apiuser'</span>,
+  pass: <span class="str">'apipass'</span>,
+});
+
+<span class="cm">// Add a lead</span>
+<span class="kw">await</span> admin.leads.<span class="fn">add</span>({
+  phoneNumber: <span class="str">'5551234567'</span>,
+  listId: <span class="str">101</span>,
+  firstName: <span class="str">'John'</span>,
+  lastName: <span class="str">'Doe'</span>,
+});
+
+<span class="cm">// Monitor an agent in real-time</span>
+<span class="kw">const</span> status = <span class="kw">await</span> admin.monitoring.<span class="fn">agentStatus</span>({
+  agentUser: <span class="str">'1001'</span>,
+});</pre>
+
+  <h2>Configuration</h2>
+  <table>
+    <tr><th>Option</th><th>Type</th><th>Default</th><th>Description</th></tr>
+    <tr><td><code>baseUrl</code></td><td>string</td><td>&mdash;</td><td>ViciDial server URL (required)</td></tr>
+    <tr><td><code>user</code></td><td>string</td><td>&mdash;</td><td>API username (required)</td></tr>
+    <tr><td><code>pass</code></td><td>string</td><td>&mdash;</td><td>API password (required)</td></tr>
+    <tr><td><code>agentUser</code></td><td>string</td><td>&mdash;</td><td>Agent user (ViciAgent only, required)</td></tr>
+    <tr><td><code>source</code></td><td>string</td><td><code>'vicijs'</code></td><td>API call source identifier (max 20 chars)</td></tr>
+    <tr><td><code>timeout</code></td><td>number</td><td><code>30000</code></td><td>Request timeout in milliseconds</td></tr>
+    <tr><td><code>fetch</code></td><td>function</td><td>global fetch</td><td>Custom fetch for testing/proxying</td></tr>
+  </table>
+</div>
+
+<!-- ═══ AGENT API ═══ -->
+<div class="page" id="page-agent">
+  <h1>Agent API Reference</h1>
+  <p>The <code>ViciAgent</code> class wraps all 31 functions of the ViciDial Agent API at <code>/agc/api.php</code>. Every method requires the agent to be logged into a ViciDial session.</p>
+
+  <h2>Call Control</h2>
+  <table>
+    <tr><th>Method</th><th>API Function</th><th>Description</th></tr>
+    <tr><td><code>agent.hangup()</code></td><td>external_hangup</td><td>Hang up the current customer call</td></tr>
+    <tr><td><code>agent.dial(params)</code></td><td>external_dial</td><td>Place a manual dial call (14 params: phone, lead_id, search, preview, etc.)</td></tr>
+    <tr><td><code>agent.previewDialAction(action)</code></td><td>preview_dial_action</td><td>SKIP, DIALONLY, ALTDIAL, ADR3DIAL, FINISH</td></tr>
+    <tr><td><code>agent.sendDtmf(value)</code></td><td>send_dtmf</td><td>Send DTMF tones (P=#, S=*, Q=silence)</td></tr>
+    <tr><td><code>agent.transferConference(params)</code></td><td>transfer_conference</td><td>HANGUP_XFER, BLIND_TRANSFER, LOCAL_CLOSER, DIAL_WITH_CUSTOMER, etc.</td></tr>
+    <tr><td><code>agent.parkCall(action)</code></td><td>park_call</td><td>PARK_CUSTOMER, GRAB_CUSTOMER, PARK_IVR_CUSTOMER, etc. (9 actions)</td></tr>
+    <tr><td><code>agent.raCallControl(params)</code></td><td>ra_call_control</td><td>Remote agent: HANGUP, EXTENSIONTRANSFER, INGROUPTRANSFER</td></tr>
+    <tr><td><code>agent.switchLead(params)</code></td><td>switch_lead</td><td>Switch lead_id on a live inbound call</td></tr>
+    <tr><td><code>agent.callsInQueueCount()</code></td><td>calls_in_queue_count</td><td>Calls waiting that could route to this agent</td></tr>
+    <tr><td><code>agent.callAgent()</code></td><td>call_agent</td><td>Call the agent's registered phone</td></tr>
+  </table>
+
+  <h2>Agent State</h2>
+  <table>
+    <tr><th>Method</th><th>API Function</th><th>Description</th></tr>
+    <tr><td><code>agent.pause(action)</code></td><td>external_pause</td><td>PAUSE or RESUME</td></tr>
+    <tr><td><code>agent.setStatus(params)</code></td><td>external_status</td><td>Set disposition (with optional callback scheduling)</td></tr>
+    <tr><td><code>agent.logout()</code></td><td>logout</td><td>Log the agent out</td></tr>
+    <tr><td><code>agent.pauseCode(code)</code></td><td>pause_code</td><td>Assign a pause code (agent must be paused)</td></tr>
+    <tr><td><code>agent.changeIngroups(params)</code></td><td>change_ingroups</td><td>CHANGE, REMOVE, or ADD inbound groups</td></tr>
+    <tr><td><code>agent.setTimerAction(params)</code></td><td>set_timer_action</td><td>Trigger action after N seconds (WEBFORM, D1_DIAL, etc.)</td></tr>
+  </table>
+
+  <h2>Lead Management</h2>
+  <table>
+    <tr><th>Method</th><th>API Function</th><th>Description</th></tr>
+    <tr><td><code>agent.addLead(params)</code></td><td>external_add_lead</td><td>Add lead to agent's manual dial queue (26 fields)</td></tr>
+    <tr><td><code>agent.updateFields(params)</code></td><td>update_fields</td><td>Update customer fields on agent screen (25+ fields)</td></tr>
+    <tr><td><code>agent.refreshPanel(params)</code></td><td>refresh_panel</td><td>Reload form/script/email/chat/callback panels</td></tr>
+  </table>
+
+  <h2>Recording</h2>
+  <table>
+    <tr><th>Method</th><th>API Function</th><th>Description</th></tr>
+    <tr><td><code>agent.recording(params)</code></td><td>recording</td><td>START, STOP, or STATUS</td></tr>
+    <tr><td><code>agent.stereoRecording(params)</code></td><td>stereo_recording</td><td>BEGIN, END, or STATUS</td></tr>
+    <tr><td><code>agent.audioPlayback(params)</code></td><td>audio_playback</td><td>PLAY, STOP, PAUSE, RESUME, RESTART</td></tr>
+  </table>
+
+  <h2>Notifications &amp; Misc</h2>
+  <table>
+    <tr><th>Method</th><th>API Function</th><th>Description</th></tr>
+    <tr><td><code>agent.sendNotification(params)</code></td><td>send_notification</td><td>Text alerts + confetti effects to agent screens</td></tr>
+    <tr><td><code>agent.vmMessage(params)</code></td><td>vm_message</td><td>Custom voicemail message for VM button</td></tr>
+    <tr><td><code>agent.forceFronterLeave3Way(params)</code></td><td>force_fronter_leave_3way</td><td>Force fronter to exit 3-way call</td></tr>
+    <tr><td><code>agent.forceFronterAudioStop(params)</code></td><td>force_fronter_audio_stop</td><td>Force fronter to stop audio playback</td></tr>
+    <tr><td><code>agent.webphoneUrl(action)</code></td><td>webphone_url</td><td>DISPLAY or LAUNCH the webphone URL</td></tr>
+    <tr><td><code>agent.version()</code></td><td>version</td><td>API version, build, date</td></tr>
+    <tr><td><code>agent.webserver()</code></td><td>webserver</td><td>Server config, timezone, specs</td></tr>
+  </table>
+</div>
+
+<!-- ═══ ADMIN API ═══ -->
+<div class="page" id="page-admin">
+  <h1>Admin API Reference</h1>
+  <p>The <code>ViciAdmin</code> class wraps all 60 functions of the ViciDial Non-Agent API at <code>/vicidial/non_agent_api.php</code>, organized into 10 domain sub-clients.</p>
+
+  <h2>admin.leads &mdash; Lead Management (11 functions)</h2>
+  <table>
+    <tr><th>Method</th><th>API Function</th><th>Description</th></tr>
+    <tr><td><code>leads.add(params)</code></td><td>add_lead</td><td>Add a new lead (45+ params including DNC check, hopper, callbacks)</td></tr>
+    <tr><td><code>leads.update(params)</code></td><td>update_lead</td><td>Update a lead (50+ params with search, callbacks, hopper)</td></tr>
+    <tr><td><code>leads.batchUpdate(params)</code></td><td>batch_update_lead</td><td>Update multiple leads at once (max 100)</td></tr>
+    <tr><td><code>leads.fieldInfo(params)</code></td><td>lead_field_info</td><td>Get a single field value</td></tr>
+    <tr><td><code>leads.allInfo(params)</code></td><td>lead_all_info</td><td>Get all lead data with optional custom fields</td></tr>
+    <tr><td><code>leads.callbackInfo(params)</code></td><td>lead_callback_info</td><td>Scheduled callback data</td></tr>
+    <tr><td><code>leads.search(params)</code></td><td>lead_search</td><td>Search by phone number</td></tr>
+    <tr><td><code>leads.statusSearch(params)</code></td><td>lead_status_search</td><td>Search by status and date</td></tr>
+    <tr><td><code>leads.cccInfo(params)</code></td><td>ccc_lead_info</td><td>Cross-cluster call lead data</td></tr>
+    <tr><td><code>leads.callidInfo(params)</code></td><td>callid_info</td><td>Call info by call ID</td></tr>
+    <tr><td><code>leads.dearchive(leadId)</code></td><td>lead_dearchive</td><td>Move from archive to active</td></tr>
+  </table>
+
+  <h2>admin.users &mdash; User Management (6 functions)</h2>
+  <table>
+    <tr><th>Method</th><th>API Function</th><th>Description</th></tr>
+    <tr><td><code>users.add(params)</code></td><td>add_user</td><td>Add user account (20 params)</td></tr>
+    <tr><td><code>users.update(params)</code></td><td>update_user</td><td>Update user settings (28 params)</td></tr>
+    <tr><td><code>users.copy(params)</code></td><td>copy_user</td><td>Duplicate an existing user</td></tr>
+    <tr><td><code>users.updateRemoteAgent(params)</code></td><td>update_remote_agent</td><td>Configure remote agent</td></tr>
+    <tr><td><code>users.details(params)</code></td><td>user_details</td><td>Get user account info</td></tr>
+    <tr><td><code>users.agentCampaigns(params)</code></td><td>agent_campaigns</td><td>Allowed campaigns/ingroups</td></tr>
+  </table>
+
+  <h2>admin.monitoring &mdash; Real-Time (6 functions)</h2>
+  <table>
+    <tr><th>Method</th><th>API Function</th><th>Description</th></tr>
+    <tr><td><code>monitoring.blindMonitor(params)</code></td><td>blind_monitor</td><td>MONITOR, BARGE, BARGESWAP, HIJACK, WHISPER</td></tr>
+    <tr><td><code>monitoring.agentIngroupInfo(params)</code></td><td>agent_ingroup_info</td><td>In-group and outbound info for agent</td></tr>
+    <tr><td><code>monitoring.agentStatus(params)</code></td><td>agent_status</td><td>Real-time status for one agent</td></tr>
+    <tr><td><code>monitoring.userGroupStatus(params)</code></td><td>user_group_status</td><td>Status for user groups</td></tr>
+    <tr><td><code>monitoring.inGroupStatus(params)</code></td><td>in_group_status</td><td>Status for inbound groups</td></tr>
+    <tr><td><code>monitoring.loggedInAgents(params)</code></td><td>logged_in_agents</td><td>All logged-in agents</td></tr>
+  </table>
+
+  <h2>admin.reporting &mdash; Data Export (6 functions)</h2>
+  <table>
+    <tr><th>Method</th><th>API Function</th><th>Description</th></tr>
+    <tr><td><code>reporting.recordingLookup(params)</code></td><td>recording_lookup</td><td>Search call recordings</td></tr>
+    <tr><td><code>reporting.didLogExport(params)</code></td><td>did_log_export</td><td>Inbound calls to a DID</td></tr>
+    <tr><td><code>reporting.agentStatsExport(params)</code></td><td>agent_stats_export</td><td>Agent activity statistics</td></tr>
+    <tr><td><code>reporting.callStatusStats(params)</code></td><td>call_status_stats</td><td>Call counts by campaign/ingroup</td></tr>
+    <tr><td><code>reporting.callDispoReport(params)</code></td><td>call_dispo_report</td><td>Disposition breakdown</td></tr>
+    <tr><td><code>reporting.phoneNumberLog(params)</code></td><td>phone_number_log</td><td>Call history for phone numbers</td></tr>
+  </table>
+
+  <h2>Other Domains</h2>
+  <table>
+    <tr><th>Domain</th><th>Functions</th><th>Methods</th></tr>
+    <tr><td><code>admin.campaigns</code></td><td>4</td><td>update, list, hopperList, hopperBulkInsert</td></tr>
+    <tr><td><code>admin.lists</code></td><td>4</td><td>add, update, info, customFields</td></tr>
+    <tr><td><code>admin.phones</code></td><td>4</td><td>add, update, addAlias, updateAlias</td></tr>
+    <tr><td><code>admin.dids</code></td><td>3</td><td>add, copy, update</td></tr>
+    <tr><td><code>admin.dnc</code></td><td>4</td><td>addPhone, deletePhone, addFpgPhone, deleteFpgPhone</td></tr>
+    <tr><td><code>admin.system</code></td><td>12</td><td>version, soundsList, mohList, vmList, serverRefresh, checkPhoneNumber, addGroupAlias, updateCidGroupEntry, updateAltUrl, updatePresets, updateLogEntry, containerList</td></tr>
+  </table>
+</div>
+
+<!-- ═══ ERRORS ═══ -->
+<div class="page" id="page-errors">
+  <h1>Error Handling</h1>
+  <p>ViciJS throws typed errors for every failure mode. All errors extend <code>ViciError</code> and include the raw ViciDial response.</p>
+
+  <h2>Error Hierarchy</h2>
+  <table>
+    <tr><th>Class</th><th>When Thrown</th><th>Properties</th></tr>
+    <tr><td><code>ViciError</code></td><td>Base class &mdash; catches all API errors</td><td>function, details, raw</td></tr>
+    <tr><td><code>ViciAuthError</code></td><td>Invalid user/pass, "no user found"</td><td>function, details, raw</td></tr>
+    <tr><td><code>ViciPermissionError</code></td><td>Insufficient user_level or feature flag</td><td>function, details, raw</td></tr>
+    <tr><td><code>ViciNotFoundError</code></td><td>Lead, user, campaign doesn't exist</td><td>function, details, raw</td></tr>
+    <tr><td><code>ViciValidationError</code></td><td>Duplicates, invalid params, disabled features</td><td>function, details, raw</td></tr>
+    <tr><td><code>ViciHttpError</code></td><td>Non-2xx HTTP response</td><td>statusCode</td></tr>
+    <tr><td><code>ViciTimeoutError</code></td><td>Request exceeded configured timeout</td><td>timeoutMs</td></tr>
+  </table>
+
+  <h2>Usage</h2>
+  <pre><span class="kw">import</span> {
+  <span class="typ">ViciValidationError</span>,
+  <span class="typ">ViciAuthError</span>,
+  <span class="typ">ViciTimeoutError</span>,
+} <span class="kw">from</span> <span class="str">'vicijs'</span>;
+
+<span class="kw">try</span> {
+  <span class="kw">await</span> admin.leads.<span class="fn">add</span>({ phoneNumber: <span class="str">'5551234567'</span>, listId: <span class="str">101</span> });
+} <span class="kw">catch</span> (err) {
+  <span class="kw">if</span> (err <span class="kw">instanceof</span> <span class="typ">ViciTimeoutError</span>) {
+    console.log(<span class="str">`Timed out after ${err.timeoutMs}ms`</span>);
+  } <span class="kw">else if</span> (err <span class="kw">instanceof</span> <span class="typ">ViciValidationError</span>) {
+    console.log(<span class="str">'Validation:'</span>, err.details);
+    console.log(<span class="str">'Raw:'</span>, err.raw);
+  } <span class="kw">else if</span> (err <span class="kw">instanceof</span> <span class="typ">ViciAuthError</span>) {
+    console.log(<span class="str">'Check credentials'</span>);
+  }
+}</pre>
+
+  <h2>Error Classification</h2>
+  <p>ViciDial errors are automatically classified by message pattern:</p>
+  <table>
+    <tr><th>Pattern in Message</th><th>Error Class</th></tr>
+    <tr><td>"no user found", "auth "</td><td>ViciAuthError</td></tr>
+    <tr><td>"PERMISSION", "NOT ALLOWED", "ACCESS"</td><td>ViciPermissionError</td></tr>
+    <tr><td>"NOT FOUND", "DOES NOT EXIST", "NOT LOGGED IN", "NO MATCHES"</td><td>ViciNotFoundError</td></tr>
+    <tr><td>"DUPLICATE", "ALREADY EXISTS", "INVALID", "NOT VALID", "DISABLED"</td><td>ViciValidationError</td></tr>
+  </table>
+</div>
+
+<!-- ═══ REFERENCE ═══ -->
+<div class="page" id="page-reference">
+  <h1>Reference</h1>
+
+  <h2>Response Parsing</h2>
+  <p>ViciDial returns pipe-delimited text. Use the built-in schemas to map fields:</p>
+  <pre><span class="kw">import</span> { <span class="fn">mapFields</span>, <span class="typ">ADMIN_SCHEMAS</span> } <span class="kw">from</span> <span class="str">'vicijs'</span>;
+
+<span class="kw">const</span> result = <span class="kw">await</span> admin.leads.<span class="fn">allInfo</span>({ leadId: <span class="str">12345</span> });
+<span class="kw">const</span> lead = <span class="fn">mapFields</span>(result.rawData, <span class="typ">ADMIN_SCHEMAS</span>.lead_all_info);
+
+lead.first_name;     <span class="cm">// 'John'</span>
+lead.phone_number;   <span class="cm">// '5551234567'</span>
+lead.status;          <span class="cm">// 'SALE'</span></pre>
+
+  <h2>Status Code Enums</h2>
+  <p>85+ status codes organized by category:</p>
+  <table>
+    <tr><th>Enum</th><th>Codes</th><th>Description</th></tr>
+    <tr><td><code>AgentStatus</code></td><td>A, B, DC, DEC, DNC, N, NI, NP, SALE, ALTNUM</td><td>Agent-selectable dispositions</td></tr>
+    <tr><td><code>SystemStatus</code></td><td>NEW, QUEUE, INCALL, DROP, NA, CALLBK, etc.</td><td>Core call flow</td></tr>
+    <tr><td><code>AMDStatus</code></td><td>AA, AM, AL, AMDXFR, ADAIR</td><td>Answering machine detection</td></tr>
+    <tr><td><code>CPDStatus</code></td><td>CPDATB, CPDB, CPDNA, etc. (13 codes)</td><td>Sangoma call progress</td></tr>
+    <tr><td><code>TransferStatus</code></td><td>XFER, HXFER, RQXFER, RAXFER, etc.</td><td>Transfer/routing</td></tr>
+    <tr><td><code>InboundStatus</code></td><td>HOLDTO, QVMAIL, TIMEOT, AFTHRS, etc.</td><td>Inbound-specific</td></tr>
+  </table>
+
+  <h2>Agent Events</h2>
+  <p>70 push event types for real-time agent activity tracking:</p>
+  <table>
+    <tr><th>Category</th><th>Events</th></tr>
+    <tr><td>Session</td><td>logged_in, logged_out, session_disabled, session_empty, session_channels</td></tr>
+    <tr><td>Call</td><td>call_dialed, call_answered, call_dead, agent_hangup, call_script</td></tr>
+    <tr><td>Disposition</td><td>dispo_screen_open, dispo_set, dispo_set_twice</td></tr>
+    <tr><td>Transfer</td><td>transfer_local_closer, transfer_blind, transfer_vmail, transfer_panel_open/closed</td></tr>
+    <tr><td>3-Way</td><td>3way_start, 3way_answered, 3way_agent_hangup, 3way_agent_leave</td></tr>
+    <tr><td>Park</td><td>park_started, park_retrieved, park_ivr_started, park_ivr_retrieved</td></tr>
+  </table>
+
+  <h2>Browser / CORS Setup</h2>
+  <p>For browser usage, configure CORS on your ViciDial server by editing <code>agc/options.php</code> and/or <code>vicidial/options.php</code>. See the <a href="https://vicidial.org/docs/CORS_SUPPORT.txt">official CORS docs</a>. Never set <code>$CORS_allowed_origin</code> to <code>'*'</code>.</p>
+
+  <h2>Links</h2>
+  <table>
+    <tr><td><a href="https://github.com/Thornebridge/vicijs">GitHub Repository</a></td><td>Source code, issues, PRs</td></tr>
+    <tr><td><a href="https://www.npmjs.com/package/vicijs">npm Package</a></td><td>npm install vicijs</td></tr>
+    <tr><td><a href="https://vicidial.org/docs/AGENT_API.txt">Agent API Docs</a></td><td>Official ViciDial Agent API reference (51KB)</td></tr>
+    <tr><td><a href="https://vicidial.org/docs/NON-AGENT_API.txt">Non-Agent API Docs</a></td><td>Official ViciDial Non-Agent API reference (168KB)</td></tr>
+    <tr><td><a href="https://vicidial.org/docs/CORS_SUPPORT.txt">CORS Support Docs</a></td><td>Browser cross-origin setup guide</td></tr>
+    <tr><td><a href="https://vicidial.org/docs/WEBSOCKETS_SUPPORT.txt">WebSocket Docs</a></td><td>Real-time agent event streaming</td></tr>
+  </table>
+</div>
+
+</div><!-- /content-wrap -->
+
+<!-- FOOTER -->
+<div class="footer">
+  ViciJS &bull; AGPL-2.0 &bull; Built by <a href="https://github.com/Thornebridge">Thornebridge</a> &bull; Not affiliated with the VICIdial Group
+</div>
+
+<script>
+function show(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  const nav = document.getElementById('nav-' + page);
+  if (el) el.classList.add('active');
+  if (nav) nav.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Handle hash navigation
+function handleHash() {
+  const hash = location.hash.replace('#', '') || 'home';
+  show(hash);
+}
+window.addEventListener('hashchange', handleHash);
+handleHash();
+</script>
+
+</body>
+</html>
