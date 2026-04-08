@@ -1,0 +1,67 @@
+{
+  "name": "vicijs",
+  "version": "0.1.0",
+  "description": "Official TypeScript SDK for ViciDial — type-safe API client with full feature parity",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check src tests",
+    "lint:fix": "biome check --write src tests",
+    "ci": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "prepublishOnly": "npm run ci"
+  },
+  "license": "AGPL-2.0",
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "vicidial",
+    "vici",
+    "contact-center",
+    "dialer",
+    "telephony",
+    "call-center",
+    "api-client",
+    "typescript",
+    "sdk",
+    "outbound",
+    "inbound",
+    "predictive-dialer"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Thornebridge/vicijs.git"
+  },
+  "homepage": "https://github.com/Thornebridge/vicijs#readme",
+  "bugs": {
+    "url": "https://github.com/Thornebridge/vicijs/issues"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.10",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.3"
+  }
+}
